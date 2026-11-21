@@ -214,6 +214,11 @@ address { font-style: normal; }
 }
 .bouton--inverse:hover { background: var(--couleur-fond-teinte); color: var(--couleur-principale-fonce); }
 
+/* Boutons réservés à un type d'écran (le passage se fait à 900 px, voir section 9) :
+   --mobile : seulement téléphone/tablette (ex. SMS : un lien sms: n'ouvre rien sur ordinateur)
+   --grand-ecran : seulement ordinateur */
+.bouton--grand-ecran { display: none; }
+
 /* Boutons empilés (page Contact) : même largeur, l'un sous l'autre */
 .boutons--colonne {
   flex-direction: column;
@@ -643,6 +648,10 @@ address { font-style: normal; }
 
   body { padding-bottom: 0; }
   .barre-action { display: none; }
+
+  /* Boutons réservés à un type d'écran (voir section 3) */
+  .bouton--mobile { display: none; }
+  .bouton--grand-ecran { display: inline-flex; }
 
   .section { padding-block: 4.5rem; }
 
