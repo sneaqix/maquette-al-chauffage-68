@@ -1,9 +1,10 @@
 /* ==========================================================================
    SCRIPT DU MODÈLE ARTISAN
    --------------------------------------------------------------------------
-   Deux petites fonctions, sans bibliothèque :
+   Trois petites fonctions, sans bibliothèque :
      1. le menu ☰ sur téléphone
      2. la carte Google Maps chargée seulement au clic (pas de cookies avant)
+     3. le bouton "Lire la suite" des avis trop longs
 
    Le site reste utilisable sans JavaScript : menu toujours affiché,
    lien "Itinéraire" à la place de la carte.
@@ -54,3 +55,27 @@ if (carte) {
     carte.classList.add('est-chargee');
   });
 }
+
+
+/* 3. AVIS : "LIRE LA SUITE" ---------------------------------------------------- */
+// Le CSS coupe chaque avis à 4 lignes. On ajoute un bouton seulement
+// sous les avis vraiment coupés (texte plus haut que la zone visible).
+document.querySelectorAll('.avis-carte__texte').forEach((texte, numero) => {
+  if (texte.scrollHeight <= texte.clientHeight + 1) return; // avis court : rien à faire
+
+  texte.id = `avis-texte-${numero + 1}`;
+  const bouton = document.createElement('button');
+  bouton.type = 'button';
+  bouton.className = 'avis-carte__suite';
+  bouton.textContent = 'Lire la suite';
+  bouton.setAttribute('aria-expanded', 'false');
+  bouton.setAttribute('aria-controls', texte.id);
+
+  bouton.addEventListener('click', () => {
+    const deplie = texte.classList.toggle('est-deplie');
+    bouton.setAttribute('aria-expanded', String(deplie));
+    bouton.textContent = deplie ? 'Réduire' : 'Lire la suite';
+  });
+
+  texte.after(bouton); // le bouton se place juste sous le texte
+});
