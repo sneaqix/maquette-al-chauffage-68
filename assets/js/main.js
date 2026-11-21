@@ -1,10 +1,11 @@
 /* ==========================================================================
    SCRIPT DU MODÈLE ARTISAN
    --------------------------------------------------------------------------
-   Trois petites fonctions, sans bibliothèque :
+   Quatre petites fonctions, sans bibliothèque :
      1. le menu ☰ sur téléphone
      2. la carte Google Maps chargée seulement au clic (pas de cookies avant)
      3. le bouton "Lire la suite" des avis trop longs
+     4. les titres de section qui apparaissent au défilement
 
    Le site reste utilisable sans JavaScript : menu toujours affiché,
    lien "Itinéraire" à la place de la carte.
@@ -79,3 +80,29 @@ document.querySelectorAll('.avis-carte__texte').forEach((texte, numero) => {
 
   texte.after(bouton); // le bouton se place juste sous le texte
 });
+
+
+/* 4. TITRES QUI APPARAISSENT AU DÉFILEMENT --------------------------------------- */
+// Seulement si le visiteur n'a pas demandé moins d'animations,
+// et si le navigateur connaît IntersectionObserver (tous les récents).
+const animationsOk = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+
+if (animationsOk && 'IntersectionObserver' in window) {
+  // IntersectionObserver prévient quand un élément entre dans l'écran,
+  // sans avoir à surveiller chaque mouvement de défilement (plus léger).
+  const observateur = new IntersectionObserver((entrees) => {
+    entrees.forEach((entree) => {
+      if (entree.isIntersecting) {
+        entree.target.classList.add('est-visible');
+        observateur.unobserve(entree.target); // une seule fois par titre
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px' }); // un peu avant le bas de l'écran
+
+  document.querySelectorAll('main section h2').forEach((titre) => {
+    // Les titres déjà visibles à l'ouverture ne sont pas animés (pas de clignotement)
+    if (titre.getBoundingClientRect().top < window.innerHeight) return;
+    titre.classList.add('apparition');
+    observateur.observe(titre);
+  });
+}
