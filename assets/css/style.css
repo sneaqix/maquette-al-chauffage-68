@@ -387,6 +387,33 @@ address { font-style: normal; }
   color: var(--couleur-principale);
 }
 
+/* Avis Google choisis à la main : 1 colonne en mobile, 2 ou 3 sur grand écran */
+.avis {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+.avis-carte figure {
+  height: 100%;
+  margin: 0;
+  padding: 1.25rem;
+  background: #fff;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+}
+.avis-carte__etoiles {
+  margin-bottom: 0.5rem;
+  color: var(--couleur-accent);
+  letter-spacing: 0.1em;
+}
+.avis-carte blockquote { margin: 0 0 0.75rem; }
+.avis-carte blockquote p { margin: 0; }
+.avis-carte figcaption { font-weight: 700; }
+.avis-carte__source { font-weight: 400; color: var(--texte-doux); }
+
 /* Communes de la zone d'intervention, en "étiquettes" */
 .zone {
   display: flex;
@@ -554,6 +581,7 @@ address { font-style: normal; }
 @media (min-width: 640px) {
   .grille-cartes,
   .atouts,
+  .avis,
   .galerie,
   .contact__grille { grid-template-columns: repeat(2, 1fr); }
   .pied__grille { grid-template-columns: repeat(3, 1fr); }
@@ -605,6 +633,7 @@ address { font-style: normal; }
   .a-propos__photo { margin-top: 0; }
 
   .grille-cartes,
+  .avis,
   .galerie { grid-template-columns: repeat(3, 1fr); }
 }
 
