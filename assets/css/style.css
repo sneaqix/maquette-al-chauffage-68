@@ -213,6 +213,22 @@ address { font-style: normal; }
 }
 .bouton--inverse:hover { background: var(--couleur-fond-teinte); color: var(--couleur-principale-fonce); }
 
+/* Boutons empilés (page Contact) : même largeur, l'un sous l'autre */
+.boutons--colonne {
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 0 1rem;
+}
+
+/* Bouton pas encore utilisable (maquette : e-mail "adresse à venir") */
+.bouton--inactif {
+  border-style: dashed;
+  color: var(--texte-doux);
+  border-color: var(--texte-doux);
+  cursor: not-allowed;
+}
+.bouton--inactif:hover { background: #fff; }
+
 /* Image d'attente "Photo du client" (maquette) */
 .photo-attente {
   margin: 0;

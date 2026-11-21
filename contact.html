@@ -39,7 +39,7 @@
   <!-- ?v=... : empreinte du fichier calculée par generer.py. Elle change dès que
        le fichier change, ce qui oblige le navigateur à recharger la nouvelle
        version au lieu de garder l'ancienne en mémoire (cache). -->
-  <link rel="stylesheet" href="assets/css/style.css?v=30eacd50">
+  <link rel="stylesheet" href="assets/css/style.css?v=58d4f240">
 
   <!-- Les couleurs du client : elles remplacent celles par défaut de style.css -->
   <style>
@@ -174,10 +174,10 @@
       <!-- Coordonnées : même écriture que dans le pied de page et sur Google -->
       <div class="carte-info">
         <h2>Coordonnées</h2>
-        <p>
+        <div class="boutons boutons--colonne">
           <a class="bouton bouton--principal" href="tel:+33767664092">Appeler le 07 67 66 40 92</a>
-        </p>
-        
+          <span class="bouton bouton--secondaire bouton--inactif" aria-disabled="true">Envoyer un e-mail (adresse à venir)</span>
+        </div>
         <address>
           <strong>AL Chauffage 68</strong><br>
           5 avenue du Général de Gaulle<br>
@@ -226,7 +226,8 @@
         <address>
           5 avenue du Général de Gaulle<br>
           68000 Colmar<br>
-          <a href="tel:+33767664092">07 67 66 40 92</a>
+          <a href="tel:+33767664092">07 67 66 40 92</a><br>
+          E-mail : adresse à venir<br>
         </address>
       </div>
       <div>
