@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!--
+  GABARIT DE BASE : la "coquille" commune à toutes les pages.
+
+  generer.py remplace chaque variable écrite entre doubles accolades
+  par la valeur du client (lue dans client.json), et insère le contenu
+  propre à chaque page à la place de la variable "contenu".
+
+  Attention : n'écris jamais de doubles accolades dans un commentaire,
+  generer.py les remplacerait aussi.
+
+  Les variables qui contiennent du HTML déjà prêt (menu, JSON-LD, contenu…)
+  sont fabriquées par generer.py. Les autres sont du texte simple.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Référencement : un titre et une description propres à chaque page -->
+  <title>Contact – AL Chauffage 68, plombier chauffagiste à Colmar</title>
+  <meta name="description" content="Appelez AL Chauffage 68 au 07 67 66 40 92. 5 avenue du Général de Gaulle, 68000 Colmar. Ouvert tous les jours : 7 h – 22 h.">
+  <!-- "index, follow" pour un vrai site, "noindex, nofollow" pour une maquette -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://sneaqix.github.io/maquette-al-chauffage-68/contact.html">
+
+  <!-- Open Graph : l'aperçu affiché quand on partage le lien (WhatsApp, Facebook…) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="AL Chauffage 68">
+  <meta property="og:title" content="Contact – AL Chauffage 68, plombier chauffagiste à Colmar">
+  <meta property="og:description" content="Appelez AL Chauffage 68 au 07 67 66 40 92. 5 avenue du Général de Gaulle, 68000 Colmar. Ouvert tous les jours : 7 h – 22 h.">
+  <meta property="og:url" content="https://sneaqix.github.io/maquette-al-chauffage-68/contact.html">
+  <!-- Image de partage (JPG ou PNG) : absente si le client n'a pas encore de photo -->
+  
+
+  <meta name="theme-color" content="#0b4f8a">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Les couleurs du client : elles remplacent celles par défaut de style.css -->
+  <style>
+    :root {
+      --couleur-principale: #0b4f8a;
+      --couleur-accent: #e8a317;
+    }
+  </style>
+
+  <!-- Données structurées LocalBusiness : aident Google à comprendre
+       qui est l'entreprise, où elle est et quand elle est ouverte -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Plumber",
+  "@id": "https://sneaqix.github.io/maquette-al-chauffage-68/#entreprise",
+  "name": "AL Chauffage 68",
+  "description": "Dépannage plomberie, chauffe-eau et chauffage à Colmar, 7 jours sur 7 de 7 h à 22 h.",
+  "url": "https://sneaqix.github.io/maquette-al-chauffage-68/",
+  "telephone": "+33767664092",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "5 avenue du Général de Gaulle",
+    "postalCode": "68000",
+    "addressLocality": "Colmar",
+    "addressCountry": "FR"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "07:00",
+      "closes": "22:00"
+    }
+  ],
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Colmar"
+    },
+    {
+      "@type": "City",
+      "name": "Horbourg-Wihr"
+    },
+    {
+      "@type": "City",
+      "name": "Wintzenheim"
+    },
+    {
+      "@type": "City",
+      "name": "Ingersheim"
+    },
+    {
+      "@type": "City",
+      "name": "Turckheim"
+    },
+    {
+      "@type": "City",
+      "name": "Sainte-Croix-en-Plaine"
+    }
+  ],
+  "sameAs": [
+    "https://maps.app.goo.gl/vkjFC9P3EUq2Zqzq7"
+  ]
+}
+</script>
+
+  <!-- Signale tout de suite au CSS que le JavaScript fonctionne (classe "js"),
+       pour que le menu mobile soit replié dès l'affichage, sans clignotement -->
+  <script>document.documentElement.classList.add('js');</script>
+  <!-- defer : le script s'exécute une fois la page lue, sans la ralentir -->
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+  <!-- Lien d'évitement : permet aux utilisateurs de clavier ou de lecteur
+       d'écran de sauter directement au contenu -->
+  <a class="lien-evitement" href="#contenu">Aller au contenu</a>
+
+  <!-- Bandeau "Maquette – proposition" (vide sur un vrai site) -->
+  <p class="bandeau-maquette">Maquette – proposition</p>
+
+  <header class="entete">
+    <div class="conteneur entete__ligne">
+      <a class="logo" href="index.html">AL Chauffage 68</a>
+
+      <!-- Bouton ☰ du menu mobile. Affiché seulement si le JS fonctionne
+           (voir ".js .menu-bouton" dans style.css) : sans JS, le menu reste
+           simplement affiché en entier. -->
+      <button class="menu-bouton" type="button" aria-expanded="false"
+              aria-controls="menu">
+        <span class="menu-bouton__icone" aria-hidden="true"></span>
+        <span class="menu-bouton__texte">Menu</span>
+      </button>
+
+      <nav class="menu" id="menu" aria-label="Menu principal">
+        <ul class="menu__liste">
+<li><a class="menu__lien" href="index.html">Accueil</a></li>
+<li><a class="menu__lien" href="services.html">Services</a></li>
+<li><a class="menu__lien" href="realisations.html">Réalisations</a></li>
+<li><a class="menu__lien" href="a-propos.html">À propos</a></li>
+<li><a class="menu__lien" href="contact.html" aria-current="page">Contact</a></li>
+</ul>
+      </nav>
+
+      <!-- Téléphone dans l'en-tête : visible sur grand écran -->
+      <a class="entete__tel" href="tel:+33767664092">07 67 66 40 92</a>
+    </div>
+  </header>
+
+  <main id="contenu">
+    <!--
+  PAGE CONTACT (devient contact.html)
+
+  La carte Google Maps n'est PAS chargée à l'ouverture de la page :
+  Google déposerait des cookies, ce qui obligerait à afficher un bandeau.
+  On affiche à la place un encadré avec un bouton. Le JS (main.js)
+  crée l'iframe seulement quand le visiteur clique : c'est son choix.
+-->
+<section class="section">
+  <div class="conteneur">
+    <h1>Contacter AL Chauffage 68 à Colmar</h1>
+
+    <div class="contact__grille">
+      <!-- Coordonnées : même écriture que dans le pied de page et sur Google -->
+      <div class="carte-info">
+        <h2>Coordonnées</h2>
+        <p>
+          <a class="bouton bouton--principal" href="tel:+33767664092">Appeler le 07 67 66 40 92</a>
+        </p>
+        
+        <address>
+          <strong>AL Chauffage 68</strong><br>
+          5 avenue du Général de Gaulle<br>
+          68000 Colmar
+        </address>
+        <p><a class="lien-fleche" href="https://www.google.com/maps/dir/?api=1&amp;destination=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar" target="_blank" rel="noopener">Itinéraire avec Google Maps</a></p>
+      </div>
+
+      <div class="carte-info">
+        <h2>Horaires</h2>
+        <table class="horaires">
+<caption class="visuellement-cache">Horaires d'ouverture</caption>
+<tbody>
+<tr><th scope="row">Lundi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Mardi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Mercredi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Jeudi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Vendredi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Samedi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Dimanche</th><td>7 h – 22 h</td></tr>
+</tbody>
+</table>
+      </div>
+    </div>
+
+    <!-- Carte chargée au clic -->
+    <div class="carte" data-carte-src="https://www.google.com/maps?q=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar&amp;output=embed">
+      <p class="carte__texte">
+        La carte est fournie par Google Maps. En l'affichant, vous acceptez que Google
+        puisse déposer des cookies sur votre appareil.
+      </p>
+      <button class="bouton bouton--secondaire carte__bouton" type="button">Afficher la carte</button>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="pied">
+    <div class="conteneur pied__grille">
+      <!-- Nom, adresse, téléphone : écrits EXACTEMENT comme partout ailleurs
+           (même règle que sur la fiche Google, c'est important pour le SEO local) -->
+      <div>
+        <p class="pied__nom">AL Chauffage 68</p>
+        <p>Plombier chauffagiste</p>
+        <address>
+          5 avenue du Général de Gaulle<br>
+          68000 Colmar<br>
+          <a href="tel:+33767664092">07 67 66 40 92</a>
+        </address>
+      </div>
+      <div>
+        <p class="pied__titre">Horaires</p>
+        <p>Tous les jours : 7 h – 22 h</p>
+      </div>
+      <div>
+        <p class="pied__titre">Liens</p>
+        <ul class="pied__liens">
+          <li><a href="contact.html">Contact et accès</a></li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="conteneur pied__copyright">© 2026 AL Chauffage 68</p>
+  </footer>
+
+  <!-- Barre d'action fixe en bas de l'écran, sur téléphone uniquement -->
+  <div class="barre-action">
+    <a class="barre-action__bouton barre-action__bouton--appel" href="tel:+33767664092">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+      Appeler
+    </a>
+    <a class="barre-action__bouton" href="https://www.google.com/maps/dir/?api=1&amp;destination=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar" target="_blank" rel="noopener">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+      Itinéraire
+    </a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Photo du client (image d'attente)">
+  <!-- Image d'attente pour les maquettes : à remplacer par une vraie photo du client.
+       Volontairement très visible (hachures + texte) pour qu'on ne l'oublie pas. -->
+  <defs>
+    <pattern id="hachures" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="28" height="28" fill="#eef1f5"/>
+      <rect width="14" height="28" fill="#e2e7ee"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#hachures)"/>
+  <rect x="6" y="6" width="788" height="588" fill="none" stroke="#9aa6b5" stroke-width="4" stroke-dasharray="18 12"/>
+  <!-- Icône appareil photo -->
+  <g transform="translate(340 200)" fill="none" stroke="#5f6b7a" stroke-width="8" stroke-linejoin="round">
+    <path d="M10 30h30l12-20h56l12 20h30v80H10z"/>
+    <circle cx="80" cy="68" r="24"/>
+  </g>
+  <text x="400" y="390" text-anchor="middle" font-family="system-ui, Segoe UI, Arial, sans-serif" font-size="44" font-weight="700" fill="#3b4655">Photo du client</text>
+</svg>

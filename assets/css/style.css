@@ -1,0 +1,616 @@
+/* ==========================================================================
+   STYLE DU MODÈLE ARTISAN
+   --------------------------------------------------------------------------
+   Écrit "mobile d'abord" : les règles de base sont pour le téléphone,
+   les blocs @media (min-width: ...) ajoutent la mise en page grand écran.
+
+   Sommaire :
+     1. Variables (couleurs, espacements)
+     2. Base (police, liens, images)
+     3. Utilitaires (conteneur, sections, boutons)
+     4. En-tête et menu
+     5. Bandeau maquette
+     6. Pages : accueil, services, réalisations, à propos, contact
+     7. Pied de page
+     8. Barre d'action mobile
+     9. Grand écran
+    10. Préférences de l'utilisateur (animations réduites)
+   ========================================================================== */
+
+
+/* 1. VARIABLES ------------------------------------------------------------
+   Les deux couleurs du client sont redéfinies dans le <head> de chaque page
+   (voir base.html). Les valeurs ci-dessous ne servent que par défaut.
+   Règle : le texte blanc doit rester lisible sur --couleur-principale
+   (contraste d'au moins 4,5:1, vérifiable sur https://webaim.org/resources/contrastchecker/). */
+:root {
+  --couleur-principale: #0b4f8a;   /* boutons, liens, titres forts */
+  --couleur-accent: #e8a317;       /* étoiles, petits détails */
+
+  /* Teinte plus foncée calculée automatiquement (survol des boutons) */
+  --couleur-principale-fonce: color-mix(in srgb, var(--couleur-principale) 80%, black);
+  /* Fond très clair teinté de la couleur du client */
+  --couleur-fond-teinte: color-mix(in srgb, var(--couleur-principale) 6%, white);
+
+  --texte: #1c2430;
+  --texte-doux: #4f5b6b;
+  --fond: #ffffff;
+  --bordure: #dde3ea;
+
+  --rayon: 8px;
+  --ombre: 0 1px 3px rgb(0 0 0 / 0.08), 0 4px 12px rgb(0 0 0 / 0.05);
+  --largeur-max: 1100px;
+  --espace: 1.25rem;               /* marge sur les côtés en mobile */
+  --hauteur-barre-action: 64px;
+}
+
+
+/* 2. BASE ----------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;          /* la largeur inclut padding et bordure */
+}
+
+html {
+  /* Polices du système : aucune police à télécharger, affichage immédiat */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--texte);
+  background: var(--fond);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-size: 1.0625rem;            /* 17 px : confortable sur téléphone */
+  /* Place pour la barre d'action fixe en bas (mobile) */
+  padding-bottom: var(--hauteur-barre-action);
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  margin: 0 0 0.6em;
+  color: var(--texte);
+}
+h1 { font-size: clamp(1.9rem, 6vw, 2.8rem); }
+h2 { font-size: clamp(1.45rem, 4vw, 1.9rem); }
+h3 { font-size: 1.2rem; }
+
+p { margin: 0 0 1em; }
+
+a { color: var(--couleur-principale); }
+a:hover { color: var(--couleur-principale-fonce); }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+address { font-style: normal; }
+
+/* Texte caché à l'écran mais lu par les lecteurs d'écran
+   (ex. : la légende du tableau des horaires) */
+.visuellement-cache {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* L'attribut hidden doit toujours cacher, même si une classe dit display: flex */
+[hidden] { display: none !important; }
+
+/* Contour bien visible quand on navigue au clavier (accessibilité).
+   Foncé sur fond clair, blanc sur fond foncé : il doit contraster
+   d'au moins 3:1 avec le fond (l'orange d'accent ne fait que 2,2:1 sur blanc). */
+:focus-visible {
+  outline: 3px solid var(--texte);
+  outline-offset: 2px;
+}
+.pied :focus-visible,
+.section--appel :focus-visible { outline-color: #fff; }
+
+/* Lien "Aller au contenu" : caché, il apparaît quand on y arrive au clavier */
+.lien-evitement {
+  position: absolute;
+  left: 0.5rem;
+  top: -100px;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--texte);
+  color: #fff;
+  border-radius: var(--rayon);
+}
+.lien-evitement:focus { top: 0.5rem; color: #fff; }
+
+
+/* 3. UTILITAIRES ---------------------------------------------------------- */
+.conteneur {
+  width: 100%;
+  max-width: var(--largeur-max);
+  margin-inline: auto;
+  padding-inline: var(--espace);
+}
+.conteneur--etroit { max-width: 760px; }
+
+.section { padding-block: 3rem; }
+.section--fond { background: var(--couleur-fond-teinte); }
+
+/* Section d'appel final : fond de la couleur du client, texte blanc */
+.section--appel {
+  background: var(--couleur-principale);
+  color: #fff;
+  text-align: center;
+}
+.section--appel h2 { color: #fff; }
+
+.intro {
+  font-size: 1.125rem;
+  color: var(--texte-doux);
+  max-width: 65ch;
+}
+
+.surtitre {
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--couleur-principale);
+}
+
+.lien-fleche {
+  font-weight: 600;
+  text-decoration: none;
+}
+.lien-fleche::after { content: " →"; }
+.lien-fleche:hover { text-decoration: underline; }
+
+/* Boutons : au moins 48 px de haut pour être faciles à toucher du doigt */
+.boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 1.4rem;
+  border: 2px solid var(--couleur-principale);
+  border-radius: var(--rayon);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+}
+.bouton--principal {
+  background: var(--couleur-principale);
+  color: #fff;
+}
+.bouton--principal:hover {
+  background: var(--couleur-principale-fonce);
+  border-color: var(--couleur-principale-fonce);
+  color: #fff;
+}
+.bouton--secondaire {
+  background: #fff;
+  color: var(--couleur-principale);
+}
+.bouton--secondaire:hover { background: var(--couleur-fond-teinte); }
+/* Bouton blanc sur fond coloré (section d'appel) */
+.bouton--inverse {
+  background: #fff;
+  border-color: #fff;
+  color: var(--couleur-principale);
+}
+.bouton--inverse:hover { background: var(--couleur-fond-teinte); color: var(--couleur-principale-fonce); }
+
+/* Image d'attente "Photo du client" (maquette) */
+.photo-attente {
+  margin: 0;
+  border-radius: var(--rayon);
+  overflow: hidden;
+}
+
+/* Toutes les photos du site : coins arrondis, recadrage propre */
+.photo {
+  width: 100%;
+  border-radius: var(--rayon);
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+}
+
+
+/* 4. EN-TÊTE ET MENU ------------------------------------------------------ */
+.entete {
+  position: sticky;                /* reste en haut pendant le défilement */
+  top: 0;
+  z-index: 50;
+  background: var(--fond);
+  border-bottom: 1px solid var(--bordure);
+}
+.entete__ligne {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 64px;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--texte);
+  text-decoration: none;
+}
+
+/* Bouton ☰ : trois barres dessinées en CSS.
+   Caché par défaut, il n'apparaît que si le JS fonctionne (classe "js"). */
+.menu-bouton { display: none; }
+.js .menu-bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: #fff;
+  font: inherit;
+  font-weight: 600;
+  color: var(--texte);
+  cursor: pointer;
+}
+.menu-bouton__icone,
+.menu-bouton__icone::before,
+.menu-bouton__icone::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  position: relative;
+}
+.menu-bouton__icone::before,
+.menu-bouton__icone::after { content: ""; position: absolute; }
+.menu-bouton__icone::before { top: -6px; }
+.menu-bouton__icone::after { top: 6px; }
+
+/* Le menu prend toute la largeur sous la ligne du logo (mobile) */
+.menu { width: 100%; }
+.menu__liste {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0.75rem;
+}
+.menu__lien {
+  display: block;
+  padding: 0.75rem 0.25rem;
+  border-bottom: 1px solid var(--bordure);
+  color: var(--texte);
+  font-weight: 600;
+  text-decoration: none;
+}
+/* Page en cours : aria-current="page" est ajouté par generer.py */
+.menu__lien[aria-current="page"] { color: var(--couleur-principale); }
+
+/* Quand le JS est actif (classe "js" sur <html>), le menu est replié
+   par défaut sur mobile et s'ouvre avec le bouton ☰. */
+.js .menu { display: none; }
+.js .menu.est-ouvert { display: block; }
+
+/* Le numéro dans l'en-tête n'apparaît que sur grand écran
+   (sur mobile, la barre d'action du bas suffit) */
+.entete__tel { display: none; }
+
+
+/* 5. BANDEAU MAQUETTE ----------------------------------------------------- */
+.bandeau-maquette {
+  margin: 0;
+  padding: 0.4rem var(--espace);
+  background: #fff4d6;
+  color: #5c4300;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+
+/* 6. PAGES ---------------------------------------------------------------- */
+
+/* --- Accueil --- */
+.accueil-hero {
+  padding-block: 2.25rem 3rem;
+  background: var(--couleur-fond-teinte);
+}
+.accroche {
+  font-size: 1.15rem;
+  color: var(--texte-doux);
+  max-width: 40ch;
+}
+.accueil-hero__photo { margin-top: 2rem; }
+
+/* Note Google : "★ Noté 5,0 sur Google (228 avis)" */
+.note-google {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  font-weight: 600;
+}
+.note-google__etoiles { color: var(--couleur-accent); letter-spacing: 0.05em; }
+
+/* Grilles de cartes (services, atouts) : 1 colonne en mobile */
+.grille-cartes {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+.carte-service {
+  padding: 1.25rem;
+  background: #fff;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+}
+.carte-service p:last-child { margin-bottom: 0; }
+.carte-service .photo,
+.carte-service .photo-attente { margin-bottom: 1rem; }
+
+/* Liste des atouts avec une coche */
+.atouts {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.atouts li {
+  position: relative;
+  padding-left: 2rem;
+}
+.atouts li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 800;
+  color: var(--couleur-principale);
+}
+
+/* Communes de la zone d'intervention, en "étiquettes" */
+.zone {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.zone li {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--bordure);
+  border-radius: 999px;
+  background: #fff;
+}
+
+/* --- Réalisations : galerie --- */
+.galerie {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.galerie figure { margin: 0; }
+.galerie figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  color: var(--texte-doux);
+}
+
+/* --- À propos --- */
+.a-propos__photo { margin-top: 1.5rem; }
+
+/* --- Contact --- */
+.contact__grille {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.carte-info {
+  padding: 1.25rem;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+}
+.carte-info address { margin: 1rem 0; }
+
+/* Tableau des horaires */
+.horaires {
+  width: 100%;
+  border-collapse: collapse;
+}
+.horaires th,
+.horaires td {
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--bordure);
+  text-align: left;
+}
+.horaires th { font-weight: 600; padding-right: 1rem; }
+
+/* Encadré de la carte, remplacé par l'iframe Google Maps après le clic */
+.carte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 300px;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: var(--rayon);
+  background: var(--couleur-fond-teinte);
+  text-align: center;
+}
+.carte__texte {
+  max-width: 45ch;
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--texte-doux);
+}
+.carte iframe {
+  width: 100%;
+  height: 400px;
+  border: 0;
+  border-radius: var(--rayon);
+}
+.carte.est-chargee { padding: 0; }
+
+/* --- Mentions légales --- */
+.texte-long h2 { margin-top: 2rem; font-size: 1.3rem; }
+
+
+/* 7. PIED DE PAGE --------------------------------------------------------- */
+.pied {
+  padding-block: 2.5rem 1rem;
+  background: #1c2430;
+  color: #d5dbe3;
+  font-size: 0.95rem;
+}
+.pied a { color: #fff; }
+.pied__grille {
+  display: grid;
+  gap: 1.5rem;
+}
+.pied__nom,
+.pied__titre {
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+  color: #fff;
+}
+.pied__liens {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pied__liens li { margin-bottom: 0.3rem; }
+.pied__copyright {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgb(255 255 255 / 0.15);
+  font-size: 0.85rem;
+}
+
+
+/* 8. BARRE D'ACTION MOBILE ------------------------------------------------ */
+.barre-action {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: 2fr 1fr;  /* "Appeler" plus large que "Itinéraire" */
+  gap: 0.5rem;
+  height: var(--hauteur-barre-action);
+  padding: 0.5rem;
+  /* Marge pour la barre système des iPhone récents */
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  background: #fff;
+  border-top: 1px solid var(--bordure);
+  box-shadow: 0 -2px 10px rgb(0 0 0 / 0.08);
+}
+.barre-action__bouton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2px solid var(--couleur-principale);
+  border-radius: var(--rayon);
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--couleur-principale);
+  background: #fff;
+}
+.barre-action__bouton--appel {
+  background: var(--couleur-principale);
+  color: #fff;
+}
+.barre-action__bouton--appel:hover { color: #fff; }
+
+
+/* 9. GRAND ÉCRAN ---------------------------------------------------------- */
+
+/* Tablette et plus (à partir de 640 px) : grilles sur 2 colonnes */
+@media (min-width: 640px) {
+  .grille-cartes,
+  .atouts,
+  .galerie,
+  .contact__grille { grid-template-columns: repeat(2, 1fr); }
+  .pied__grille { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Ordinateur (à partir de 900 px) : menu en ligne, plus de barre d'action */
+@media (min-width: 900px) {
+  :root { --espace: 2rem; }
+
+  body { padding-bottom: 0; }
+  .barre-action { display: none; }
+
+  .section { padding-block: 4.5rem; }
+
+  /* Le menu s'affiche toujours en ligne, le bouton ☰ disparaît */
+  .entete__ligne { flex-wrap: nowrap; min-height: 76px; }
+  .js .menu-bouton { display: none; }
+  .menu,
+  .js .menu { display: block; width: auto; }
+  .menu__liste { display: flex; gap: 1.5rem; padding: 0; }
+  .menu__lien { padding: 0.5rem 0; border-bottom: 2px solid transparent; }
+  .menu__lien:hover,
+  .menu__lien[aria-current="page"] { border-bottom-color: var(--couleur-principale); }
+
+  .entete__tel {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    border-radius: var(--rayon);
+    background: var(--couleur-principale);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .entete__tel:hover { background: var(--couleur-principale-fonce); color: #fff; }
+
+  /* Accueil et À propos : texte à gauche, photo à droite */
+  .accueil-hero { padding-block: 4.5rem; }
+  .accueil-hero__grille,
+  .a-propos__grille {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .accueil-hero__photo,
+  .a-propos__photo { margin-top: 0; }
+
+  .grille-cartes,
+  .galerie { grid-template-columns: repeat(3, 1fr); }
+}
+
+
+/* 10. PRÉFÉRENCES DE L'UTILISATEUR ---------------------------------------- */
+/* Si le visiteur a demandé moins d'animations dans son système */
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
