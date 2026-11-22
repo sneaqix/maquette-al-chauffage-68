@@ -305,6 +305,12 @@ address { font-style: normal; }
 .menu-bouton__icone::after { content: ""; position: absolute; }
 .menu-bouton__icone::before { top: -6px; }
 .menu-bouton__icone::after { top: 6px; }
+/* Menu ouvert : la barre du milieu disparaît, les deux autres forment une croix */
+[aria-expanded="true"] > .menu-bouton__icone { background: transparent; }
+[aria-expanded="true"] > .menu-bouton__icone::before,
+[aria-expanded="true"] > .menu-bouton__icone::after { top: 0; background: var(--texte); }
+[aria-expanded="true"] > .menu-bouton__icone::before { transform: rotate(45deg); }
+[aria-expanded="true"] > .menu-bouton__icone::after { transform: rotate(-45deg); }
 
 /* Le menu prend toute la largeur sous la ligne du logo (mobile) */
 .menu { width: 100%; }
@@ -324,10 +330,83 @@ address { font-style: normal; }
 /* Page en cours : aria-current="page" est ajouté par generer.py */
 .menu__lien[aria-current="page"] { color: var(--couleur-principale); }
 
+/* Icônes du menu : seulement sur téléphone et tablette (cachées en section 9) */
+.menu__icone {
+  flex-shrink: 0;
+  margin-right: 0.25rem;
+  vertical-align: middle;
+  color: var(--couleur-principale);
+}
+
 /* Quand le JS est actif (classe "js" sur <html>), le menu est replié
    par défaut sur mobile et s'ouvre avec le bouton ☰. */
 .js .menu { display: none; }
 .js .menu.est-ouvert { display: block; }
+
+/* Voile sombre créé par main.js : sous l'en-tête (50) et la barre d'action (60) */
+.menu-voile {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgb(0 0 0 / 0.45);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+}
+.menu-voile.est-visible { opacity: 1; visibility: visible; }
+
+/* Panneau déroulant : téléphone et tablette, seulement avec JS.
+   Sans JS, le menu reste une simple liste dans la page. */
+@media (max-width: 899.98px) {
+  .menu-ouvert { overflow: hidden; }   /* la page ne défile plus derrière le menu */
+
+  /* Logo et bouton ne bougent pas quand "Menu" devient "Fermer" */
+  .js .entete__ligne { flex-wrap: nowrap; }
+  .js .logo { min-width: 0; }
+  .js .menu-bouton { flex-shrink: 0; min-width: 7.2rem; }
+
+  .js .menu {
+    position: absolute;                /* par-dessus la page, sans la pousser */
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: calc(100vh - var(--menu-haut, 100px) - var(--hauteur-barre-action));
+    max-height: calc(100dvh - var(--menu-haut, 100px) - var(--hauteur-barre-action));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--fond);
+    border-top: 1px solid var(--bordure);
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 12px 24px rgb(0 0 0 / 0.15);
+  }
+  .js .menu__liste { padding: 0.5rem; }
+  .js .menu__lien {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    min-height: 56px;
+    padding: 0.75rem;
+    border-bottom: 0;
+    border-left: 4px solid transparent;
+    border-radius: var(--rayon);
+  }
+  .js .menu__lien:focus-visible { outline-offset: -3px; }
+  .js .menu__lien:active { background: var(--couleur-fond-teinte); }
+  /* Chevron à droite, dessiné avec deux bordures (non lu par les lecteurs d'écran) */
+  .js .menu__lien::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    margin: 0 0.25rem 0 auto;
+    border-top: 2px solid var(--texte-doux);
+    border-right: 2px solid var(--texte-doux);
+    transform: rotate(45deg);
+  }
+  .js .menu__lien[aria-current="page"] {
+    border-left-color: var(--couleur-principale);
+    background: var(--couleur-fond-teinte);
+  }
+}
 
 /* Le numéro dans l'en-tête n'apparaît que sur grand écran
    (sur mobile, la barre d'action du bas suffit) */
@@ -662,6 +741,7 @@ address { font-style: normal; }
   .js .menu { display: block; width: auto; }
   .menu__liste { display: flex; gap: 1.5rem; padding: 0; }
   .menu__lien { padding: 0.5rem 0; border-bottom: 2px solid transparent; }
+  .menu__icone { display: none; }
   .menu__lien:hover,
   .menu__lien[aria-current="page"] { border-bottom-color: var(--couleur-principale); }
 
@@ -769,6 +849,10 @@ address { font-style: normal; }
 
   /* --- Menu mobile qui se déroule doucement --- */
   .js .menu.est-ouvert { animation: menu-derouler 0.25s ease-out; }
+  .menu-voile { transition: opacity 0.25s, visibility 0.25s; }
+  .menu-bouton__icone { transition: background-color 0.2s; }
+  .menu-bouton__icone::before,
+  .menu-bouton__icone::after { transition: top 0.2s, transform 0.2s; }
   @keyframes menu-derouler {
     from { opacity: 0; transform: translateY(-8px); }
     to   { opacity: 1; transform: translateY(0); }

@@ -20,18 +20,62 @@ const boutonMenu = document.querySelector('.menu-bouton');
 const menu = document.getElementById('menu');
 
 if (boutonMenu && menu) {
-  boutonMenu.addEventListener('click', () => {
-    const ouvert = boutonMenu.getAttribute('aria-expanded') === 'true';
+  const entete = boutonMenu.closest('.entete');
+  const texteBouton = boutonMenu.querySelector('.menu-bouton__texte');
+
+  // Le voile qui assombrit la page. C'est un vrai élément (et pas un ::after)
+  // pour que Safari sur iPhone prenne bien en compte le toucher.
+  const voile = document.createElement('div');
+  voile.className = 'menu-voile';
+  voile.setAttribute('aria-hidden', 'true');
+  document.body.append(voile);
+
+  const menuEstOuvert = () => menu.classList.contains('est-ouvert');
+
+  // Donne au CSS le bas de l'en-tête : le menu défile si l'écran est trop bas
+  // (téléphone tenu à l'horizontale).
+  const mesurerEntete = () => {
+    menu.style.setProperty('--menu-haut', `${entete.getBoundingClientRect().bottom}px`);
+  };
+
+  // Un seul endroit pour ouvrir ou fermer : tout reste synchronisé
+  const afficherMenu = (ouvrir) => {
+    if (ouvrir) mesurerEntete();
     // aria-expanded indique aux lecteurs d'écran si le menu est ouvert
-    boutonMenu.setAttribute('aria-expanded', String(!ouvert));
-    menu.classList.toggle('est-ouvert', !ouvert);
+    boutonMenu.setAttribute('aria-expanded', String(ouvrir));
+    texteBouton.textContent = ouvrir ? 'Fermer' : 'Menu';
+    menu.classList.toggle('est-ouvert', ouvrir);
+    voile.classList.toggle('est-visible', ouvrir);
+    // Bloque le défilement de la page derrière le menu
+    document.documentElement.classList.toggle('menu-ouvert', ouvrir);
+  };
+
+  boutonMenu.addEventListener('click', () => afficherMenu(!menuEstOuvert()));
+  voile.addEventListener('click', () => afficherMenu(false));
+
+  // Au clavier : si on sort de l'en-tête avec Tab, le menu se referme
+  entete.addEventListener('focusout', (evenement) => {
+    const suivant = evenement.relatedTarget;
+    if (menuEstOuvert() && suivant && !entete.contains(suivant)) afficherMenu(false);
+  });
+
+  // Passage en grand écran : le menu redevient une simple ligne de liens
+  window.matchMedia('(min-width: 900px)').addEventListener('change', (evenement) => {
+    if (evenement.matches) afficherMenu(false);
+  });
+  window.addEventListener('resize', () => {
+    if (menuEstOuvert()) mesurerEntete();
+  });
+
+  // Bouton "retour" : le navigateur peut réafficher la page telle qu'on l'a quittée
+  window.addEventListener('pageshow', (evenement) => {
+    if (evenement.persisted) afficherMenu(false);
   });
 
   // Touche Échap : referme le menu et remet le focus sur le bouton
   document.addEventListener('keydown', (evenement) => {
-    if (evenement.key === 'Escape' && menu.classList.contains('est-ouvert')) {
-      boutonMenu.setAttribute('aria-expanded', 'false');
-      menu.classList.remove('est-ouvert');
+    if (evenement.key === 'Escape' && menuEstOuvert()) {
+      afficherMenu(false);
       boutonMenu.focus();
     }
   });
