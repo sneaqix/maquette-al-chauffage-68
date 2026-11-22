@@ -309,8 +309,20 @@ if (commandesAvis) {
     compteurVu.textContent = `${numero + 1} / ${cartes.length}`;
     const phrase = `Avis ${numero + 1} sur ${cartes.length}`;
     if (compteurLu.textContent !== phrase) compteurLu.textContent = phrase;
-    fleches[0].setAttribute('aria-disabled', String(numero === 0));
-    fleches[1].setAttribute('aria-disabled', String(numero === cartes.length - 1));
+    activerFleches();
+  };
+
+  // Un bouton désactivé perd le focus clavier : on le passe d'abord à l'autre flèche
+  const activerFleches = () => {
+    const inactives = [numero === 0, numero === cartes.length - 1];
+    fleches.forEach((fleche, i) => {
+      if (inactives[i] && document.activeElement === fleche) {
+        const autre = fleches[1 - i];
+        autre.disabled = false;
+        autre.focus({ preventScroll: true });
+      }
+    });
+    fleches.forEach((fleche, i) => { fleche.disabled = inactives[i]; });
   };
 
   // Retrouve la carte affichée d'après la position de défilement
@@ -342,6 +354,11 @@ if (commandesAvis) {
       afficherNumero(lirePosition());
     }, 150);
   }, { passive: true });
+
+  // Le doigt (ou la molette) reprend la main : compteur et flèches suivent la vraie position
+  ['touchstart', 'wheel'].forEach((geste) => {
+    liste.addEventListener(geste, () => { cible = null; }, { passive: true });
+  });
 
   fleches.forEach((fleche) => {
     fleche.addEventListener('click', () => allerA(numero + Number(fleche.dataset.sens)));

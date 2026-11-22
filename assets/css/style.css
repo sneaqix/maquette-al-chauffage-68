@@ -36,7 +36,10 @@
 
   /* Teinte plus foncée calculée automatiquement (survol des boutons) */
   --couleur-principale-fonce: color-mix(in srgb, var(--couleur-principale) 80%, black);
-  --couleur-action-fonce: color-mix(in srgb, var(--couleur-action) 80%, black);
+  /* Replis sans color-mix (Safari avant 16.2) : sinon le fond des boutons disparaît au survol.
+     Les vraies teintes sont juste après ce bloc, dans @supports. */
+  --couleur-action-fonce: var(--couleur-action);
+  --couleur-action-teinte: #fff;
   /* Fond très clair teinté de la couleur du client */
   --couleur-fond-teinte: color-mix(in srgb, var(--couleur-principale) 6%, white);
 
@@ -53,6 +56,12 @@
   --largeur-max: 1100px;
   --espace: 1.25rem;               /* marge sur les côtés en mobile */
   --hauteur-barre-action: 64px;
+}
+@supports (color: color-mix(in srgb, red, white)) {
+  :root {
+    --couleur-action-fonce: color-mix(in srgb, var(--couleur-action) 80%, black);
+    --couleur-action-teinte: color-mix(in srgb, var(--couleur-action) 6%, white);
+  }
 }
 
 
@@ -256,8 +265,18 @@ address { font-style: normal; }
   border-color: var(--couleur-action-fonce);
   color: #fff;
 }
-/* Sur fond bleu, l'orange se détache mal (1,6:1) : bordure blanche */
-.section--appel .bouton--action { border-color: #fff; }
+/* Dans un bandeau bleu, l'orange se détache mal (1,6:1) : bouton blanc, texte orange
+   (5,18:1 ; au survol, fond teinté : 4,76:1) */
+.section--appel .bouton--action {
+  background: #fff;
+  border-color: #fff;
+  color: var(--couleur-action);
+}
+.section--appel .bouton--action:hover {
+  background: var(--couleur-action-teinte);
+  border-color: var(--couleur-action-teinte);
+  color: var(--couleur-action);
+}
 .bouton--secondaire {
   background: #fff;
   color: var(--couleur-principale);
@@ -564,7 +583,12 @@ address { font-style: normal; }
   text-decoration: none;
 }
 a.note-google:hover { border-color: var(--couleur-principale); color: var(--texte); }
-.note-google__etoiles { color: var(--couleur-accent); letter-spacing: 0.05em; white-space: nowrap; }
+.note-google__etoiles {
+  color: var(--couleur-accent);
+  font-size: 1.25rem;              /* même taille que "5,0" : 14 px de haut tous les deux */
+  line-height: 1;
+  white-space: nowrap;
+}
 .note-google strong { font-size: 1.25rem; }
 a.note-google .note-google__avis { color: var(--couleur-principale); text-decoration: underline; }
 
@@ -604,6 +628,15 @@ a.note-google .note-google__avis { color: var(--couleur-principale); text-decora
   align-items: flex-start;
   gap: 0.85rem;
   padding: 0.8rem;
+  padding-right: 2.1rem;           /* la place du chevron */
+}
+.carte-service__chevron {
+  position: absolute;
+  top: 50%;
+  right: 0.6rem;
+  margin-top: -10px;               /* moitié de sa hauteur : transform reste libre pour le décalage */
+  color: var(--couleur-principale);
+  pointer-events: none;            /* le clic traverse jusqu'au lien de la carte */
 }
 .carte-service--lien .carte-service__icone {
   display: grid;
@@ -656,6 +689,7 @@ a.note-google .note-google__avis { color: var(--couleur-principale); text-decora
 .tuiles {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;             /* toutes les tuiles à la même hauteur */
   gap: 0.6rem;
   margin: 1rem 0 0;
   padding: 0;
@@ -681,7 +715,15 @@ a.note-google .note-google__avis { color: var(--couleur-principale); text-decora
   color: var(--couleur-principale);
 }
 .tuile__valeur .a-completer { font-size: 0.9rem; }
-.tuile__etoile { color: var(--couleur-accent); }
+/* Repère seul : centré dans une ligne aussi haute qu'une grosse valeur (1,2 em).
+   Police système : Barlow n'est chargée qu'en 600 et 700, le gris paraîtrait gras. */
+.tuile__valeur--repere {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.2em;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
 .tuile__libelle {
   margin: 0;
   font-size: 0.9rem;
@@ -721,8 +763,10 @@ a.note-google .note-google__avis { color: var(--couleur-principale); text-decora
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scroll-padding-inline: var(--espace);
-    scrollbar-width: thin;
+    /* Barre de défilement cachée, le défilement marche toujours */
+    scrollbar-width: none;
   }
+  .avis::-webkit-scrollbar { display: none; }
   .avis > li {
     flex: 0 0 85%;
     min-width: 0;
@@ -748,10 +792,10 @@ a.note-google .note-google__avis { color: var(--couleur-principale); text-decora
   font: 700 1.6rem/1 var(--police-titres);
   cursor: pointer;
 }
-/* aria-disabled plutôt que disabled : le bouton garde le focus clavier */
-.carrousel__fleche[aria-disabled="true"] {
-  border-color: var(--texte-doux);
-  border-style: dashed;
+/* Premier ou dernier avis : flèche désactivée (main.js déplace le focus clavier sur l'autre) */
+.carrousel__fleche:disabled {
+  border-color: var(--bordure);
+  background: var(--bordure);
   color: var(--texte-doux);
   cursor: default;
 }
@@ -1075,7 +1119,11 @@ html:not(.js) .carte { display: none; }
   padding: 0;
   list-style: none;
 }
-.pied__liens li { margin-bottom: 0.3rem; }
+.pied__liens li { margin-bottom: 0.3rem; break-inside: avoid; }
+/* Téléphone : 2 colonnes, qui se lisent de haut en bas puis à droite */
+@media (max-width: 639.98px) {
+  .pied__liens { columns: 2; column-gap: 0.75rem; }
+}
 .pied__copyright {
   margin-top: 2rem;
   padding-top: 1rem;
@@ -1220,7 +1268,7 @@ html:not(.js) .carte { display: none; }
     grid-auto-flow: column;
     grid-auto-columns: minmax(0, 1fr);
   }
-  .carte-service--lien { flex-direction: column; padding: 1.25rem; }
+  .carte-service--lien { flex-direction: column; padding: 1.25rem; padding-right: 2.1rem; }
   .carrousel__commandes { display: none; }
   /* Avis : autant de colonnes que possible (au moins 240 px chacune),
      donc 4 avis = 4 colonnes sur une seule ligne */
@@ -1251,6 +1299,10 @@ html:not(.js) .carte { display: none; }
   .barre-action__bouton:active,
   .entete__tel:active { transform: translateY(1px); }
 
+  /* --- Chevron des cartes de services : glisse au focus clavier (et au survol, plus bas) --- */
+  .carte-service__chevron { transition: transform 0.2s ease-out; }
+  .carte-service--lien:has(:focus-visible) .carte-service__chevron { transform: translateX(3px); }
+
   /* --- Survol à la souris uniquement ("hover: hover" exclut les écrans tactiles) --- */
   @media (hover: hover) {
     /* Cartes qui se soulèvent */
@@ -1264,24 +1316,27 @@ html:not(.js) .carte { display: none; }
       box-shadow: 0 2px 6px rgb(0 0 0 / 0.08), 0 10px 24px rgb(0 0 0 / 0.08);
     }
 
+    .carte-service--lien:hover .carte-service__chevron { transform: translateX(3px); }
+
     /* Photos de la galerie qui zooment de 3 % dans leur cadre */
     .galerie .photo { transition: transform 0.4s ease-out; }
     .galerie li:hover .photo { transform: scale(1.03); }
   }
 
-  /* --- Étoiles de la note Google qui s'allument une par une --- */
+  /* --- Étoiles de la note Google : un éclat l'une après l'autre ---
+     Seule la taille bouge : elles sont jaunes dès le premier affichage. */
   .note-google__etoiles .etoile {
     display: inline-block;
-    animation: etoile-allumer 0.3s ease-out both;
+    animation: etoile-eclat 0.3s ease-in-out;
   }
   .note-google__etoiles .etoile:nth-child(2) { animation-delay: 0.1s; }
   .note-google__etoiles .etoile:nth-child(3) { animation-delay: 0.2s; }
   .note-google__etoiles .etoile:nth-child(4) { animation-delay: 0.3s; }
   .note-google__etoiles .etoile:nth-child(5) { animation-delay: 0.4s; }
 
-  @keyframes etoile-allumer {
-    from { color: var(--bordure); transform: scale(0.6); }
-    to   { color: var(--couleur-accent); transform: scale(1); }
+  @keyframes etoile-eclat {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.3); }
   }
 
   /* --- Téléphone qui "sonne" une seule fois, 2 s après l'ouverture --- */
