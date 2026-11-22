@@ -48,7 +48,7 @@
   <!-- ?v=... : empreinte du fichier calculée par generer.py. Elle change dès que
        le fichier change, ce qui oblige le navigateur à recharger la nouvelle
        version au lieu de garder l'ancienne en mémoire (cache). -->
-  <link rel="stylesheet" href="assets/css/style.css?v=7aac6dd0">
+  <link rel="stylesheet" href="assets/css/style.css?v=8a58036d">
 
   <!-- Les couleurs du client : elles remplacent celles par défaut de style.css -->
   <style>
@@ -67,7 +67,7 @@
        pour que le menu mobile soit replié dès l'affichage, sans clignotement -->
   <script>document.documentElement.classList.add('js');</script>
   <!-- defer : le script s'exécute une fois la page lue, sans la ralentir -->
-  <script src="assets/js/main.js?v=68a49f0f" defer></script>
+  <script src="assets/js/main.js?v=74660fad" defer></script>
 </head>
 <body>
   <!-- Lien d'évitement : permet aux utilisateurs de clavier ou de lecteur
@@ -132,12 +132,12 @@
 -->
 <div class="devis" id="devis">
   <h2>Demander un devis</h2>
-  <p>Pour une urgence, <a href="tel:+33767664092">appelez le 07 67 66 40 92</a> : c'est plus rapide.</p>
+  <p class="devis__test"><strong>Site en test :</strong> votre message est reçu par Louison, qui réalise ce site, pas par AL Chauffage 68. Pour une intervention ou une urgence, <a href="tel:+33767664092">appelez le 07 67 66 40 92</a>.</p>
 
-  <p class="devis__retour" id="demande-envoyee">Merci, votre demande est bien envoyée.</p>
+  <p class="devis__retour" id="demande-envoyee">Merci, votre message de test est bien envoyé à Louison. AL Chauffage 68 ne le reçoit pas : pour une intervention, appelez le 07 67 66 40 92.</p>
 
-  <form class="formulaire" method="post" data-demo>
-    <input type="hidden" name="access_key" value="[à compléter : clé Web3Forms]">
+  <form class="formulaire" method="post" action="https://api.web3forms.com/submit">
+    <input type="hidden" name="access_key" value="60adc409-95b2-417c-8cdc-48f0d1977e46">
     <input type="hidden" name="subject" value="Demande de devis depuis le site AL Chauffage 68">
     <input type="hidden" name="from_name" value="Site AL Chauffage 68">
     <!-- Page de retour pour l'envoi sans JS (main.js retire ce champ avant un envoi fetch) -->
@@ -145,7 +145,7 @@
     <!-- Piège à robots : un humain ne voit pas cette case -->
     <input type="checkbox" name="botcheck" class="formulaire__piege" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-    <p class="formulaire__aide">Seul le téléphone est obligatoire (*) : sans lui, nous ne pouvons pas vous rappeler.</p>
+    <p class="formulaire__aide">Seul le téléphone est obligatoire (*).</p>
 
     <div class="champ">
       <label for="champ-nom">Nom</label>
@@ -159,7 +159,7 @@
              pattern="\s*(?:0[1-9](?:[\s.\-]?[0-9]){8}|(?:\+|00)[1-9](?:[\s.\-]?(?:\(0\))?[\s.\-]?[0-9]){7,13})\s*"
              title="10 chiffres commençant par 0, ou un numéro international commençant par +"
              aria-describedby="aide-telephone erreur-telephone"
-             data-erreur-vide="Indiquez votre numéro de téléphone pour que nous puissions vous rappeler."
+             data-erreur-vide="Indiquez un numéro de téléphone : ce champ est obligatoire."
              data-erreur-format="Numéro non reconnu : 10 chiffres commençant par 0, ou un numéro commençant par +.">
       <p class="champ__erreur" id="erreur-telephone"></p>
     </div>
@@ -203,19 +203,19 @@
 
     <p class="formulaire__photo">Une photo du problème nous aide beaucoup : <a href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20">envoyez-la par SMS au 07 67 66 40 92</a>.</p>
 
-    <p class="formulaire__sans-js">Formulaire indisponible pour le moment : appelez-nous ou écrivez-nous par SMS au 07 67 66 40 92.</p>
-    <button class="bouton bouton--action formulaire__envoi" type="submit" disabled>Envoyer ma demande</button>
+    
+    <button class="bouton bouton--action formulaire__envoi" type="submit" >Envoyer ma demande</button>
 
     <!-- role="status" : le message est lu par les lecteurs d'écran dès qu'il s'affiche -->
-    <p class="formulaire__etat" role="status" tabindex="-1" data-telephone="07 67 66 40 92"></p>
+    <p class="formulaire__etat" role="status" tabindex="-1" data-telephone="07 67 66 40 92"
+       data-confirmation="Merci, votre message de test est bien envoyé à Louison. AL Chauffage 68 ne le reçoit pas : pour une intervention, appelez le 07 67 66 40 92."></p>
   </form>
-  <p class="devis__demo"><strong>Formulaire de démonstration :</strong> rien n'est envoyé. Pour l'activer : <span class="a-completer">[à compléter : clé Web3Forms]</span></p>
+  
 
   <p class="devis__rgpd">
-    Vos données sont utilisées par AL Chauffage 68 uniquement pour répondre à votre demande,
-    et conservées <span class="a-completer">[à compléter : durée]</span>. Elles transitent par Web3Forms, notre prestataire d'envoi, hors Union européenne.
-    Pour exercer vos droits : <a href="tel:+33767664092">07 67 66 40 92</a>,
-    ou par courrier au 5 avenue du Général de Gaulle, 68000 Colmar.
+    Vos données sont utilisées par Louison, qui réalise ce site, uniquement pour tester ce formulaire,
+    et conservées 30 jours maximum. Elles transitent par Web3Forms, notre prestataire d'envoi, hors Union européenne.
+    Pour exercer vos droits : envoyez un message à Louison avec ce formulaire, en précisant votre demande.
     <a href="mentions-legales.html#donnees">En savoir plus sur vos données</a>.
   </p>
 </div>

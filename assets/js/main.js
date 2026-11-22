@@ -280,7 +280,7 @@ if (formulaire) {
 
     if (envoye) {
       formulaire.reset();
-      annoncer('Merci, votre demande est bien envoyée.', 'succes');
+      annoncer(etat.dataset.confirmation, 'succes'); // texte préparé par generer.py (normal ou test)
     } else {
       // Les champs restent remplis : le visiteur ne perd rien
       annoncer(`L'envoi n'a pas fonctionné. Réessayez, ou appelez le ${etat.dataset.telephone}.`, 'erreur');

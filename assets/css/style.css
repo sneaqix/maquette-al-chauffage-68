@@ -1011,6 +1011,12 @@ html:not(.js) .carte { display: none; }
   line-height: 1.5;
   color: var(--texte-doux);
 }
+/* Formulaire en test : dit clairement qui reçoit, avant qu'on le remplisse */
+.devis__test {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--couleur-action);
+  border-radius: var(--rayon);
+}
 /* Confirmation sans JS : Web3Forms renvoie sur contact.html#demande-envoyee */
 .devis__retour { display: none; }
 .devis__retour:target { display: block; }
