@@ -740,6 +740,8 @@ address { font-style: normal; }
   border-radius: var(--rayon);
 }
 .carte.est-chargee { padding: 0; }
+/* Sans JS le bouton "Afficher la carte" ne ferait rien : on masque l'encadré */
+html:not(.js) .carte { display: none; }
 
 /* --- Formulaire de devis --- */
 .devis {

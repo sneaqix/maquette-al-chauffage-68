@@ -10,7 +10,7 @@
      6. le formulaire de devis
 
    Le site reste utilisable sans JavaScript : menu toujours affiché,
-   lien "Itinéraire" à la place de la carte, formulaire envoyé normalement.
+   carte masquée, formulaire envoyé normalement.
    ========================================================================== */
 
 // Note : la classe "js" est ajoutée sur <html> par une ligne dans le <head>
