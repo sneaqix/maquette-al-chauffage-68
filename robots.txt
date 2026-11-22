@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+
+# À activer au lancement (automatique avec maquette: false) :
+# Sitemap: https://sneaqix.github.io/maquette-al-chauffage-68/sitemap.xml

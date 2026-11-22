@@ -4,6 +4,8 @@
    Écrit "mobile d'abord" : les règles de base sont pour le téléphone,
    les blocs @media (min-width: ...) ajoutent la mise en page grand écran.
 
+   Infos manquantes : classe .a-completer (jaune, pointillés), voir section 3.
+
    Sommaire :
      1. Variables (couleurs, espacements)
      2. Base (police, liens, images)
@@ -25,6 +27,7 @@
    Règle : le texte blanc doit rester lisible sur --couleur-principale
    (contraste d'au moins 4,5:1, vérifiable sur https://webaim.org/resources/contrastchecker/). */
 :root {
+  --cible-tactile: 44px;           /* taille minimum de ce qu'on touche du doigt */
   --couleur-principale: #0b4f8a;   /* boutons, liens, titres forts */
   --couleur-accent: #e8a317;       /* étoiles, petits détails */
 
@@ -60,6 +63,9 @@ html {
   color: var(--texte);
   background: var(--fond);
   -webkit-text-size-adjust: 100%;
+  /* Un élément atteint par une ancre ou par Tab n'est masqué ni par l'en-tête, ni par la barre du bas */
+  scroll-padding-top: 88px;
+  scroll-padding-bottom: calc(var(--hauteur-barre-action) + 12px);
 }
 
 body {
@@ -214,6 +220,15 @@ address { font-style: normal; }
 }
 .bouton--inverse:hover { background: var(--couleur-fond-teinte); color: var(--couleur-principale-fonce); }
 
+/* Bouton transparent bordé de blanc (2e bouton d'une section d'appel) */
+.bouton--contour {
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+.bouton--contour:hover { background: var(--couleur-principale-fonce); color: #fff; }
+.boutons--centre { justify-content: center; }
+
 /* Boutons réservés à un type d'écran (le passage se fait à 900 px, voir section 9) :
    --mobile : seulement téléphone/tablette (ex. SMS : un lien sms: n'ouvre rien sur ordinateur)
    --grand-ecran : seulement ordinateur */
@@ -226,14 +241,26 @@ address { font-style: normal; }
   margin: 0 0 1rem;
 }
 
-/* Bouton pas encore utilisable (maquette : e-mail "adresse à venir") */
-.bouton--inactif {
-  border-style: dashed;
-  color: var(--texte-doux);
-  border-color: var(--texte-doux);
-  cursor: not-allowed;
+/* Info que le client doit fournir ou confirmer (posée par texte() dans generer.py).
+   Couleurs fixes : lisible sur fond blanc, bleu ou sombre (contraste 8:1). */
+.a-completer {
+  padding: 0.05em 0.35em;
+  border: 1px dashed #8a6500;
+  border-radius: 4px;
+  background: #fff4c2;
+  color: #4a3600;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;     /* bordure complète même sur deux lignes */
 }
-.bouton--inactif:hover { background: #fff; }
+.note-client {
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.9;
+}
 
 /* Image d'attente "Photo du client" (maquette) */
 .photo-attente {
@@ -250,6 +277,23 @@ address { font-style: normal; }
   aspect-ratio: 4 / 3;
 }
 
+
+/* Zones tactiles : les liens isolés font au moins 44 px de haut
+   (les liens au milieu d'une phrase en sont dispensés par les règles WCAG). */
+.logo,
+.note-google a,
+.lien-tactile,
+.pied a {
+  display: inline-flex;
+  align-items: center;
+  min-width: var(--cible-tactile);
+  min-height: var(--cible-tactile);
+}
+.lien-fleche {
+  display: inline-block;
+  min-height: var(--cible-tactile);
+  padding-block: 0.6rem;
+}
 
 /* 4. EN-TÊTE ET MENU ------------------------------------------------------ */
 .entete {
@@ -358,12 +402,16 @@ address { font-style: normal; }
 /* Panneau déroulant : téléphone et tablette, seulement avec JS.
    Sans JS, le menu reste une simple liste dans la page. */
 @media (max-width: 899.98px) {
+  /* Sans JS, le menu est déplié : un en-tête collant couvrirait la moitié de l'écran */
+  html:not(.js) .entete { position: static; }
+  /* Classe posée par main.js quand on descend */
+  .entete.est-cache { transform: translateY(-100%); }
   .menu-ouvert { overflow: hidden; }   /* la page ne défile plus derrière le menu */
 
   /* Logo et bouton ne bougent pas quand "Menu" devient "Fermer" */
   .js .entete__ligne { flex-wrap: nowrap; }
   .js .logo { min-width: 0; }
-  .js .menu-bouton { flex-shrink: 0; min-width: 7.2rem; }
+  .js .menu-bouton { flex-shrink: 0; justify-content: center; min-width: 7.2rem; }
 
   .js .menu {
     position: absolute;                /* par-dessus la page, sans la pousser */
@@ -446,7 +494,7 @@ address { font-style: normal; }
   margin: 0;
   font-weight: 600;
 }
-.note-google__etoiles { color: var(--couleur-accent); letter-spacing: 0.05em; }
+.note-google__etoiles { color: var(--couleur-accent); letter-spacing: 0.05em; white-space: nowrap; }
 
 /* Grilles de cartes (services, atouts) : 1 colonne en mobile */
 .grille-cartes {
@@ -466,6 +514,18 @@ address { font-style: normal; }
 .carte-service p:last-child { margin-bottom: 0; }
 .carte-service .photo,
 .carte-service .photo-attente { margin-bottom: 1rem; }
+
+.carte-service__prix {
+  font-weight: 700;
+  line-height: 1.9;
+}
+.tarifs {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border-radius: var(--rayon);
+  background: var(--couleur-fond-teinte);
+}
+.tarifs ul { margin: 0; padding-left: 1.2rem; line-height: 1.9; }
 
 /* Liste des atouts avec une coche */
 .atouts {
@@ -559,6 +619,41 @@ address { font-style: normal; }
   background: #fff;
 }
 
+/* --- FAQ --- */
+.faq__item { border-bottom: 1px solid var(--bordure); }
+.faq__item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 56px;
+  padding: 0.75rem 0.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;                /* retire le triangle du navigateur */
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after {
+  content: "+";
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  color: var(--couleur-principale);
+}
+.faq__item[open] summary::after { content: "−"; }
+.faq__reponse { padding: 0 0.25rem 0.5rem; line-height: 1.9; }
+.faq__reponse ul { margin: 0 0 1em; padding-left: 1.2rem; }
+.faq__reponse li { margin-bottom: 0.5rem; }
+/* Même apparence que .a-completer, sans être compté comme un emplacement de plus */
+.faq__badge {
+  display: inline-block;
+  padding: 0 0.4em;
+  border: 1px dashed #8a6500;
+  border-radius: 4px;
+  background: #fff4c2;
+  color: #4a3600;
+  font-size: 0.78rem;
+}
+
 /* --- Réalisations : galerie --- */
 .galerie {
   display: grid;
@@ -577,10 +672,20 @@ address { font-style: normal; }
   margin-top: 0.4rem;
   font-size: 0.95rem;
   color: var(--texte-doux);
+  line-height: 1.9;
 }
+.galerie__titre { display: block; color: var(--texte); }
+.galerie__ligne { display: block; }
 
 /* --- À propos --- */
 .a-propos__photo { margin-top: 1.5rem; }
+.a-propos__sections {
+  display: grid;
+  gap: 1rem;
+}
+.a-propos__sections .carte-info { background: #fff; line-height: 1.9; }
+.a-propos__sections h2 { font-size: 1.3rem; }
+.a-propos__sections ul { margin: 0; padding-left: 1.2rem; }
 
 /* --- Contact --- */
 .contact__grille {
@@ -636,7 +741,102 @@ address { font-style: normal; }
 }
 .carte.est-chargee { padding: 0; }
 
+/* --- Formulaire de devis --- */
+.devis {
+  max-width: 680px;
+  margin-top: 2.5rem;
+}
+.devis__demo,
+.devis__retour,
+.formulaire__etat:not(:empty) {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond-teinte);
+}
+.devis__demo { line-height: 1.9; }
+/* Confirmation sans JS : Web3Forms renvoie sur contact.html#demande-envoyee */
+.devis__retour { display: none; }
+.devis__retour:target { display: block; }
+
+.formulaire__piege { display: none; }
+.formulaire__aide,
+.champ__aide {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+}
+.champ {
+  min-width: 0;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  border: 0;
+}
+.champ > label,
+.champ legend {
+  display: block;
+  margin-bottom: 0.3rem;
+  padding: 0;
+  font-weight: 700;
+}
+.champ input:not([type="radio"]),
+.champ select,
+.champ textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--texte-doux);   /* 3:1 minimum pour le bord d'un champ */
+  border-radius: var(--rayon);
+  background: #fff;
+  color: var(--texte);
+  font: inherit;                         /* 17 px : iOS ne zoome pas dans le champ */
+}
+.champ textarea { resize: vertical; }
+.champ [aria-invalid="true"] { border: 2px solid #b3261e; }
+.champ__erreur {
+  margin: 0.35rem 0 0;
+  color: #b3261e;                        /* 6,5:1 sur blanc */
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.champ__erreur:empty { display: none; }
+/* .champ devant .choix : sinon ".champ > label" (display: block) l'emporte */
+.champ .choix {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 96px;
+  min-height: 48px;
+  margin: 0 0.5rem 0 0;
+  padding: 0 1rem;
+  border: 1px solid var(--texte-doux);
+  border-radius: var(--rayon);
+  cursor: pointer;
+}
+.choix input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--couleur-principale);
+}
+.formulaire__photo { margin: 1.1rem 0; }
+.formulaire__envoi { width: 100%; margin-top: 0.5rem; }
+.formulaire__envoi:disabled { opacity: 0.6; cursor: not-allowed; }
+.formulaire.est-pret .formulaire__sans-js { display: none; }
+/* Pas de display:none quand il est vide : la zone doit exister pour être annoncée */
+.formulaire__etat { margin: 1rem 0; }
+.formulaire__etat[data-type="succes"]:not(:empty) { border-color: #1b6b3a; background: #e8f5ec; }
+.formulaire__etat[data-type="erreur"]:not(:empty) { border-color: #b3261e; background: #fdecea; }
+.devis__rgpd {
+  font-size: 0.875rem;
+  line-height: 1.9;
+  color: var(--texte-doux);
+}
+
 /* --- Mentions légales --- */
+.texte-long p { line-height: 1.9; }    /* place pour les repères jaunes qui se suivent */
+.texte-long h3 { margin: 1.4rem 0 0.3rem; font-size: 1.05rem; }
 .texte-long h2 { margin-top: 2rem; font-size: 1.3rem; }
 
 
@@ -680,7 +880,7 @@ address { font-style: normal; }
   bottom: 0;
   z-index: 60;
   display: grid;
-  grid-template-columns: 2fr 1fr;  /* "Appeler" plus large que "Itinéraire" */
+  grid-template-columns: 3fr 2fr;  /* "Appeler" plus large que "Devis SMS" */
   gap: 0.5rem;
   height: var(--hauteur-barre-action);
   padding: 0.5rem;
@@ -701,6 +901,7 @@ address { font-style: normal; }
   text-decoration: none;
   color: var(--couleur-principale);
   background: #fff;
+  white-space: nowrap;
 }
 .barre-action__bouton--appel {
   background: var(--couleur-principale);
@@ -717,6 +918,7 @@ address { font-style: normal; }
   .atouts,
   .avis,
   .galerie,
+  .a-propos__sections,
   .contact__grille { grid-template-columns: repeat(2, 1fr); }
   .pied__grille { grid-template-columns: repeat(3, 1fr); }
 }
@@ -725,6 +927,7 @@ address { font-style: normal; }
 @media (min-width: 900px) {
   :root { --espace: 2rem; }
 
+  html { scroll-padding-bottom: 12px; }
   body { padding-bottom: 0; }
   .barre-action { display: none; }
 
@@ -801,7 +1004,6 @@ address { font-style: normal; }
   .bouton:active,
   .barre-action__bouton:active,
   .entete__tel:active { transform: translateY(1px); }
-  .bouton--inactif:active { transform: none; }
 
   /* --- Survol à la souris uniquement ("hover: hover" exclut les écrans tactiles) --- */
   @media (hover: hover) {
@@ -846,6 +1048,9 @@ address { font-style: normal; }
     20%, 60% { transform: rotate(-14deg); }
     40%, 80% { transform: rotate(14deg); }
   }
+
+  /* --- En-tête qui se cache en descendant --- */
+  .entete { transition: transform 0.25s ease-out; }
 
   /* --- Menu mobile qui se déroule doucement --- */
   .js .menu.est-ouvert { animation: menu-derouler 0.25s ease-out; }

@@ -32,14 +32,17 @@
   <meta property="og:description" content="Mentions légales du site de AL Chauffage 68, plombier chauffagiste à Colmar.">
   <meta property="og:url" content="https://sneaqix.github.io/maquette-al-chauffage-68/mentions-legales.html">
   <!-- Image de partage (JPG ou PNG) : absente si le client n'a pas encore de photo -->
-  
+  <meta property="og:image" content="https://sneaqix.github.io/maquette-al-chauffage-68/assets/img/partage.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Visuel d'attente : photo du client à venir">
 
   <meta name="theme-color" content="#0b4f8a">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <!-- ?v=... : empreinte du fichier calculée par generer.py. Elle change dès que
        le fichier change, ce qui oblige le navigateur à recharger la nouvelle
        version au lieu de garder l'ancienne en mémoire (cache). -->
-  <link rel="stylesheet" href="assets/css/style.css?v=0b98cee3">
+  <link rel="stylesheet" href="assets/css/style.css?v=c45af33d">
 
   <!-- Les couleurs du client : elles remplacent celles par défaut de style.css -->
   <style>
@@ -49,77 +52,15 @@
     }
   </style>
 
-  <!-- Données structurées LocalBusiness : aident Google à comprendre
+  <!-- Données structurées LocalBusiness (accueil seulement) : aident Google à comprendre
        qui est l'entreprise, où elle est et quand elle est ouverte -->
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Plumber",
-  "@id": "https://sneaqix.github.io/maquette-al-chauffage-68/#entreprise",
-  "name": "AL Chauffage 68",
-  "description": "Dépannage plomberie, chauffe-eau et chauffage à Colmar, 7 jours sur 7 de 7 h à 22 h.",
-  "url": "https://sneaqix.github.io/maquette-al-chauffage-68/",
-  "telephone": "+33767664092",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "5 avenue du Général de Gaulle",
-    "postalCode": "68000",
-    "addressLocality": "Colmar",
-    "addressCountry": "FR"
-  },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ],
-      "opens": "07:00",
-      "closes": "22:00"
-    }
-  ],
-  "areaServed": [
-    {
-      "@type": "City",
-      "name": "Colmar"
-    },
-    {
-      "@type": "City",
-      "name": "Horbourg-Wihr"
-    },
-    {
-      "@type": "City",
-      "name": "Wintzenheim"
-    },
-    {
-      "@type": "City",
-      "name": "Ingersheim"
-    },
-    {
-      "@type": "City",
-      "name": "Turckheim"
-    },
-    {
-      "@type": "City",
-      "name": "Sainte-Croix-en-Plaine"
-    }
-  ],
-  "sameAs": [
-    "https://maps.app.goo.gl/vkjFC9P3EUq2Zqzq7"
-  ]
-}
-</script>
+  
 
   <!-- Signale tout de suite au CSS que le JavaScript fonctionne (classe "js"),
        pour que le menu mobile soit replié dès l'affichage, sans clignotement -->
   <script>document.documentElement.classList.add('js');</script>
   <!-- defer : le script s'exécute une fois la page lue, sans la ralentir -->
-  <script src="assets/js/main.js?v=777a31a8" defer></script>
+  <script src="assets/js/main.js?v=b04b1072" defer></script>
 </head>
 <body>
   <!-- Lien d'évitement : permet aux utilisateurs de clavier ou de lecteur
@@ -170,21 +111,21 @@
 
     <h2>Éditeur du site</h2>
     <p>
-      AL Chauffage 68, [forme juridique à compléter]<br>
+      AL Chauffage 68, <span class="a-completer">[à compléter : forme juridique]</span><br>
       5 avenue du Général de Gaulle, 68000 Colmar<br>
-      Téléphone : <a href="tel:+33767664092">07 67 66 40 92</a><br>
-      
-      SIRET : [à compléter]<br>
-      
-      
-      Directeur de la publication : [à compléter]
+      Téléphone : <a class="lien-tactile" href="tel:+33767664092">07 67 66 40 92</a><br>
+      E-mail : <span class="a-completer">[à compléter : adresse e-mail]</span><br>
+      SIRET : <span class="a-completer">[à compléter : numéro SIRET]</span><br>
+      Immatriculation : <span class="a-completer">[à compléter : numéro RCS ou registre national des entreprises]</span><br>
+      N° TVA intracommunautaire : <span class="a-completer">[à compléter : numéro de TVA, si assujetti]</span><br>
+      Directeur de la publication : <span class="a-completer">[à compléter : nom du directeur de la publication]</span>
     </p>
 
     <h2>Hébergement</h2>
     <p>
       GitHub, Inc. (service GitHub Pages)<br>
       88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis<br>
-      <a href="https://github.com" rel="noopener">https://github.com</a>
+      <a class="lien-tactile" href="https://github.com" rel="noopener">https://github.com</a>
     </p>
 
     <h2>Conception du site</h2>
@@ -196,10 +137,60 @@
       sauf mention contraire. Toute reproduction sans autorisation écrite est interdite.
     </p>
 
-    <h2>Données personnelles et cookies</h2>
+    <h2 id="donnees">Données personnelles et cookies</h2>
+    <!--
+  DONNÉES DU FORMULAIRE (inséré dans mentions-legales.html si le site a un formulaire).
+  Article 13 du RGPD. Web3Forms d'après sa FAQ, lue le 22/11/2026 :
+  https://docs.web3forms.com/getting-started/faq
+-->
+<p>Le formulaire de demande de devis collecte des données personnelles.</p>
+<p><strong>Sur cette version de démonstration, le formulaire n'envoie et n'enregistre rien.</strong> Ce qui suit s'appliquera dès son activation.</p>
+
+<h3>Responsable du traitement</h3>
+<p>AL Chauffage 68, 5 avenue du Général de Gaulle, 68000 Colmar.</p>
+
+<h3>Données collectées</h3>
+<p>
+  Nom, téléphone, commune, type de problème, urgence et message. Seul le téléphone est obligatoire :
+  sans lui, votre demande ne peut pas être envoyée.
+</p>
+
+<h3>Finalité</h3>
+<p>Répondre à votre demande de devis ou d'intervention, et uniquement cela : pas de prospection, pas de revente.</p>
+
+<h3>Base légale</h3>
+<p>L'exécution de mesures précontractuelles prises à votre demande (article 6.1.b du RGPD).</p>
+
+<h3>Destinataire</h3>
+<p>AL Chauffage 68, qui reçoit la demande par e-mail.</p>
+
+<h3>Sous-traitant et transfert hors Union européenne</h3>
+<p>
+  L'envoi est assuré par Web3Forms, service de la société Web3Creative (Kerala, Inde),
+  dont les serveurs sont situés aux États-Unis.
+  Garanties encadrant ce transfert : <span class="a-completer">[à compléter : garanties de transfert hors UE, par exemple clauses contractuelles types]</span>.
+</p>
+
+<h3>Durée de conservation</h3>
+<p>
+  Par AL Chauffage 68 : <span class="a-completer">[à compléter : durée]</span>.<br>
+  Par Web3Forms : <span class="a-completer">[à compléter : durée de conservation chez Web3Forms]</span>.
+</p>
+
+<h3>Vos droits</h3>
+<p>
+  Vous pouvez demander l'accès à vos données, leur rectification, leur effacement, la limitation
+  de leur utilisation et leur portabilité, par téléphone au
+  <a href="tel:+33767664092">07 67 66 40 92</a>, par courrier à l'adresse ci-dessus.
+  Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la
+  <a href="https://www.cnil.fr/fr/plaintes" rel="noopener">CNIL</a>.
+</p>
+
+<h3>Cookies et hébergement</h3>
+
     <p>
-      Ce site ne dépose aucun cookie, n'utilise aucun outil de mesure d'audience
-      et ne collecte aucune donnée personnelle.
+      Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience.
+      Son hébergeur peut enregistrer l'adresse IP des visiteurs dans ses journaux techniques, pour la sécurité.
     </p>
     <p>
       La carte de la page Contact est fournie par Google Maps. Elle n'est chargée
@@ -224,7 +215,7 @@
           5 avenue du Général de Gaulle<br>
           68000 Colmar<br>
           <a href="tel:+33767664092">07 67 66 40 92</a><br>
-          E-mail : adresse à venir<br>
+          E-mail : <span class="a-completer">[à compléter : adresse e-mail]</span>
         </address>
       </div>
       <div>
@@ -235,6 +226,7 @@
         <p class="pied__titre">Liens</p>
         <ul class="pied__liens">
           <li><a href="contact.html">Contact et accès</a></li>
+          <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar" target="_blank" rel="noopener">Itinéraire</a></li>
           <li><a href="mentions-legales.html">Mentions légales</a></li>
         </ul>
       </div>
@@ -248,10 +240,7 @@
       <svg class="icone-appel" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
       Appeler
     </a>
-    <a class="barre-action__bouton" href="https://www.google.com/maps/dir/?api=1&amp;destination=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar" target="_blank" rel="noopener">
-      <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
-      Itinéraire
-    </a>
+    <a class="barre-action__bouton" href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-6 4V5a2 2 0 0 1 2-2z"/></svg>Devis SMS</a>
   </div>
 </body>
 </html>

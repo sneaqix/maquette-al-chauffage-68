@@ -32,14 +32,17 @@
   <meta property="og:description" content="AL Chauffage 68, plombier chauffagiste à Colmar. Dépannage plomberie, chauffe-eau et chauffage à Colmar, 7 jours sur 7 de 7 h à 22 h.">
   <meta property="og:url" content="https://sneaqix.github.io/maquette-al-chauffage-68/">
   <!-- Image de partage (JPG ou PNG) : absente si le client n'a pas encore de photo -->
-  
+  <meta property="og:image" content="https://sneaqix.github.io/maquette-al-chauffage-68/assets/img/partage.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Visuel d'attente : photo du client à venir">
 
   <meta name="theme-color" content="#0b4f8a">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <!-- ?v=... : empreinte du fichier calculée par generer.py. Elle change dès que
        le fichier change, ce qui oblige le navigateur à recharger la nouvelle
        version au lieu de garder l'ancienne en mémoire (cache). -->
-  <link rel="stylesheet" href="assets/css/style.css?v=0b98cee3">
+  <link rel="stylesheet" href="assets/css/style.css?v=c45af33d">
 
   <!-- Les couleurs du client : elles remplacent celles par défaut de style.css -->
   <style>
@@ -49,8 +52,9 @@
     }
   </style>
 
-  <!-- Données structurées LocalBusiness : aident Google à comprendre
+  <!-- Données structurées LocalBusiness (accueil seulement) : aident Google à comprendre
        qui est l'entreprise, où elle est et quand elle est ouverte -->
+  <!-- [à compléter : géolocalisation (latitude et longitude), champ entreprise.geo] -->
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -119,7 +123,7 @@
        pour que le menu mobile soit replié dès l'affichage, sans clignotement -->
   <script>document.documentElement.classList.add('js');</script>
   <!-- defer : le script s'exécute une fois la page lue, sans la ralentir -->
-  <script src="assets/js/main.js?v=777a31a8" defer></script>
+  <script src="assets/js/main.js?v=b04b1072" defer></script>
 </head>
 <body>
   <!-- Lien d'évitement : permet aux utilisateurs de clavier ou de lecteur
@@ -164,6 +168,17 @@
   Le seul H1 de la page : le métier + la ville (essentiel pour le SEO local).
 -->
 
+<!--
+  AVANT LA MISE EN LIGNE (tout se règle dans client.json, puis relancer generer.py)
+  [ ] Retirer le noindex : "maquette": false
+  [ ] Retirer le bandeau maquette : même réglage
+  [ ] Ajouter le nom de domaine : "site.url" (met à jour canonical, Open Graph, sitemap, CNAME)
+  [ ] Renseigner tous les [à compléter] et lever les [à confirmer]
+  [ ] Ajouter les photos, dont photos/partage.jpg (1200 x 630)
+  [ ] Renseigner la clé Web3Forms, créée avec l'e-mail de l'artisan, puis tester un vrai envoi
+  [ ] Ligne Sitemap de robots.txt : s'active toute seule avec "maquette": false
+-->
+
 <!-- 1. Bandeau d'accueil : ce que fait l'entreprise, où, et le bouton d'appel -->
 <section class="accueil-hero">
   <div class="conteneur accueil-hero__grille">
@@ -176,10 +191,8 @@
 
       <div class="boutons">
         <a class="bouton bouton--principal" href="tel:+33767664092">Appeler le 07 67 66 40 92</a>
-        <!-- Sur mobile : bouton SMS ; sur ordinateur : bouton e-mail (voir generer.py) -->
-        <a class="bouton bouton--secondaire bouton--mobile" href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20">Demander un devis par SMS</a>
-        <span class="bouton bouton--secondaire bouton--grand-ecran bouton--inactif" aria-disabled="true">Envoyer un e-mail (adresse à venir)</span>
-        <a class="bouton bouton--secondaire" href="services.html">Voir nos services</a>
+        <!-- Deux boutons visibles, jamais plus. Le 2e : SMS sur téléphone, formulaire sur ordinateur -->
+        <a class="bouton bouton--secondaire bouton--mobile" href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20">Devis par SMS</a><a class="bouton bouton--secondaire bouton--grand-ecran" href="contact.html#devis">Demander un devis</a>
       </div>
     </div>
 
@@ -202,10 +215,28 @@
 <li class="avis-carte"><figure><p class="avis-carte__etoiles" role="img" aria-label="Note : 5 sur 5">★★★★★</p><blockquote class="avis-carte__texte"><p>J&#x27;ai contacté AL Chauffage 68, bien que mon problème ne soit pas dans son domaine, il a pris le temps de m&#x27;écouter, d&#x27;appeler un de ses confrères pour qu&#x27;il vienne me dépanner et de me dire de revenir vers lui si son confrère ne me rappelait pas.<br>Il n&#x27;avait rien à gagner à faire tout ça, mais il l&#x27;a fait quand même fait alors que tous ses confrères que j&#x27;ai contacté déniaient me répondre ou se déplacer.<br>Je trouvais ça surprenant un artisan avec une note de 5/5 et autant de commentaires, je comprends mieux pourquoi.</p></blockquote><figcaption>Clément B.<span class="avis-carte__source"> – avis Google, octobre 2026</span></figcaption></figure></li>
 </ul>
 <p><a class="lien-fleche" href="https://maps.app.goo.gl/vkjFC9P3EUq2Zqzq7" target="_blank" rel="noopener">Voir les 228 avis sur Google</a></p>
+<p class="note-client"><span class="a-completer">[à confirmer avec le client : accord pour afficher ces avis sur le site]</span></p>
 </div>
 </section>
 
-<!-- 3. Aperçu des services (les 3 premiers de la liste) -->
+<!-- 3. Bandeau de confiance, juste sous les avis (liste "atouts" de client.json) -->
+<section class="section section--fond">
+  <div class="conteneur">
+    <h2>Pourquoi nous faire confiance</h2>
+    <ul class="atouts">
+<li><strong>Assurance décennale</strong> – <span class="a-completer">[à compléter : assureur et zone couverte]</span></li>
+<li><strong>SIRET</strong> – <span class="a-completer">[à compléter : numéro SIRET]</span></li>
+<li><strong><span class="a-completer">[à compléter : nombre]</span> ans d&#x27;expérience</strong></li>
+<li><strong>Devis gratuit</strong></li>
+<li><strong>Marques posées et entretenues</strong> – <span class="a-completer">[à compléter : marques]</span></li>
+<li><strong>7 jours sur 7</strong> – de 7 h à 22 h, week-ends compris.</li>
+<li><strong>Artisan à Colmar</strong> – installé avenue du Général de Gaulle.</li>
+</ul>
+    <p class="note-client"><span class="a-completer">[à confirmer avec le client : assurance décennale, devis gratuit, 7 jours sur 7]</span></p>
+  </div>
+</section>
+
+<!-- 4. Aperçu des services (les 3 premiers de la liste) -->
 <section class="section">
   <div class="conteneur">
     <h2>Nos services</h2>
@@ -214,25 +245,13 @@
 <li class="carte-service"><h3>Chauffe-eau</h3><p>Plus d&#x27;eau chaude ? Réparation ou remplacement de votre chauffe-eau.</p></li>
 <li class="carte-service"><h3>Chauffage et chaudière</h3><p>Dépannage et entretien de chaudières et de radiateurs, pour passer l&#x27;hiver au chaud.</p></li>
 </ul>
+    <p class="note-client"><span class="a-completer">[à confirmer avec le client : liste des services, descriptions, clientèle de particuliers]</span></p>
     <p><a class="lien-fleche" href="services.html">Tous nos services</a></p>
   </div>
 </section>
 
-<!-- 4. Les points forts de l'entreprise -->
-<section class="section section--fond">
-  <div class="conteneur">
-    <h2>Pourquoi nous appeler</h2>
-    <ul class="atouts">
-<li><strong>7 jours sur 7</strong> – de 7 h à 22 h, week-ends compris.</li>
-<li><strong>Noté 5,0 sur Google</strong> – par 228 clients.</li>
-<li><strong>Dépannage rapide</strong> – un point souvent cité dans les avis de nos clients.</li>
-<li><strong>Artisan à Colmar</strong> – installé avenue du Général de Gaulle.</li>
-</ul>
-  </div>
-</section>
-
 <!-- 5. Zone d'intervention : liste des communes (utile pour le SEO local) -->
-<section class="section">
+<section class="section section--fond">
   <div class="conteneur">
     <h2>Zone d'intervention</h2>
     <p>Nous intervenons à Colmar et dans les environs :</p>
@@ -244,15 +263,34 @@
 <li>Turckheim</li>
 <li>Sainte-Croix-en-Plaine</li>
 </ul>
+    <p class="note-client"><span class="a-completer">[à confirmer avec le client : communes desservies]</span></p>
   </div>
 </section>
 
-<!-- 6. Appel à l'action final -->
+<!-- 6. Questions fréquentes (section absente si la liste "faq" est vide) -->
+<section class="section">
+<div class="conteneur conteneur--etroit">
+<h2>Questions fréquentes</h2>
+<div class="faq">
+<details class="faq__item"><summary><span>Sous quel délai intervenez-vous ? <span class="faq__badge">à compléter</span></span></summary><div class="faq__reponse"><p><span class="a-completer">[à compléter : délai habituel pour une urgence et pour des travaux programmés]</span>. En cas d&#x27;urgence, le plus rapide est de nous appeler au 07 67 66 40 92.</p></div></details>
+<details class="faq__item"><summary><span>Intervenez-vous le week-end ? <span class="faq__badge">à compléter</span></span></summary><div class="faq__reponse"><p>Nos horaires sont de 7 h à 22 h, samedi et dimanche compris <span class="a-completer">[à confirmer avec le client : interventions le week-end]</span>. Majoration éventuelle : <span class="a-completer">[à compléter : majoration soir et week-end]</span>.</p></div></details>
+<details class="faq__item"><summary><span>Quelles communes desservez-vous ? <span class="faq__badge">à confirmer</span></span></summary><div class="faq__reponse"><p>Colmar, Horbourg-Wihr, Wintzenheim, Ingersheim, Turckheim et Sainte-Croix-en-Plaine <span class="a-completer">[à confirmer avec le client : communes desservies]</span>. Pour une autre commune, appelez-nous.</p></div></details>
+<details class="faq__item"><summary><span>Le devis est-il gratuit ? <span class="faq__badge">à confirmer</span></span></summary><div class="faq__reponse"><p>Oui, le devis est gratuit <span class="a-completer">[à confirmer avec le client : devis gratuit, déplacement compris ou non]</span>.</p></div></details>
+<details class="faq__item"><summary><span>Quels moyens de paiement acceptez-vous ? <span class="faq__badge">à compléter</span></span></summary><div class="faq__reponse"><p><span class="a-completer">[à compléter : moyens de paiement]</span></p></div></details>
+<details class="faq__item"><summary><span>Que faire en attendant le plombier ?</span></summary><div class="faq__reponse"><ul><li>Fuite d&#x27;eau : fermez le robinet d&#x27;arrêt général, souvent près du compteur d&#x27;eau.</li><li>Eau près d&#x27;une prise ou d&#x27;un appareil électrique : n&#x27;y touchez pas et coupez le courant au tableau, seulement si vous pouvez y aller au sec.</li><li>Chauffe-eau qui fuit : coupez son alimentation électrique ou gaz, puis son arrivée d&#x27;eau, si c&#x27;est sans danger.</li><li>Chaudière en panne : notez le code d&#x27;erreur affiché et ne démontez rien.</li><li>Odeur de gaz : aérez, ne touchez à aucun interrupteur, pas de flamme ni de téléphone à l&#x27;intérieur, sortez, puis appelez Urgence Sécurité Gaz au 0 800 47 33 33 (gratuit, 24 h/24).</li><li>Malaise, incendie ou très forte odeur de gaz : sortez et appelez le 18 ou le 112.</li></ul></div></details>
+</div>
+</div>
+</section>
+
+<!-- 7. Appel à l'action final -->
 <section class="section section--appel">
   <div class="conteneur">
     <h2>AL Chauffage 68, votre plombier chauffagiste à Colmar</h2>
     <p>Ouvert tous les jours : 7 h – 22 h.</p>
-    <a class="bouton bouton--inverse" href="tel:+33767664092">Appeler le 07 67 66 40 92</a>
+    <div class="boutons boutons--centre">
+      <a class="bouton bouton--inverse" href="tel:+33767664092">Appeler le 07 67 66 40 92</a>
+      <a class="bouton bouton--contour" href="contact.html#devis">Demander un devis</a>
+    </div>
   </div>
 </section>
 
@@ -269,7 +307,7 @@
           5 avenue du Général de Gaulle<br>
           68000 Colmar<br>
           <a href="tel:+33767664092">07 67 66 40 92</a><br>
-          E-mail : adresse à venir<br>
+          E-mail : <span class="a-completer">[à compléter : adresse e-mail]</span>
         </address>
       </div>
       <div>
@@ -280,6 +318,7 @@
         <p class="pied__titre">Liens</p>
         <ul class="pied__liens">
           <li><a href="contact.html">Contact et accès</a></li>
+          <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar" target="_blank" rel="noopener">Itinéraire</a></li>
           <li><a href="mentions-legales.html">Mentions légales</a></li>
         </ul>
       </div>
@@ -293,10 +332,7 @@
       <svg class="icone-appel" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
       Appeler
     </a>
-    <a class="barre-action__bouton" href="https://www.google.com/maps/dir/?api=1&amp;destination=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar" target="_blank" rel="noopener">
-      <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
-      Itinéraire
-    </a>
+    <a class="barre-action__bouton" href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-6 4V5a2 2 0 0 1 2-2z"/></svg>Devis SMS</a>
   </div>
 </body>
 </html>

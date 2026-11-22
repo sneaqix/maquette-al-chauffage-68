@@ -32,14 +32,17 @@
   <meta property="og:description" content="Photos des chantiers réalisés par AL Chauffage 68, plombier chauffagiste à Colmar et dans les environs.">
   <meta property="og:url" content="https://sneaqix.github.io/maquette-al-chauffage-68/realisations.html">
   <!-- Image de partage (JPG ou PNG) : absente si le client n'a pas encore de photo -->
-  
+  <meta property="og:image" content="https://sneaqix.github.io/maquette-al-chauffage-68/assets/img/partage.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Visuel d'attente : photo du client à venir">
 
   <meta name="theme-color" content="#0b4f8a">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <!-- ?v=... : empreinte du fichier calculée par generer.py. Elle change dès que
        le fichier change, ce qui oblige le navigateur à recharger la nouvelle
        version au lieu de garder l'ancienne en mémoire (cache). -->
-  <link rel="stylesheet" href="assets/css/style.css?v=0b98cee3">
+  <link rel="stylesheet" href="assets/css/style.css?v=c45af33d">
 
   <!-- Les couleurs du client : elles remplacent celles par défaut de style.css -->
   <style>
@@ -49,77 +52,15 @@
     }
   </style>
 
-  <!-- Données structurées LocalBusiness : aident Google à comprendre
+  <!-- Données structurées LocalBusiness (accueil seulement) : aident Google à comprendre
        qui est l'entreprise, où elle est et quand elle est ouverte -->
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Plumber",
-  "@id": "https://sneaqix.github.io/maquette-al-chauffage-68/#entreprise",
-  "name": "AL Chauffage 68",
-  "description": "Dépannage plomberie, chauffe-eau et chauffage à Colmar, 7 jours sur 7 de 7 h à 22 h.",
-  "url": "https://sneaqix.github.io/maquette-al-chauffage-68/",
-  "telephone": "+33767664092",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "5 avenue du Général de Gaulle",
-    "postalCode": "68000",
-    "addressLocality": "Colmar",
-    "addressCountry": "FR"
-  },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ],
-      "opens": "07:00",
-      "closes": "22:00"
-    }
-  ],
-  "areaServed": [
-    {
-      "@type": "City",
-      "name": "Colmar"
-    },
-    {
-      "@type": "City",
-      "name": "Horbourg-Wihr"
-    },
-    {
-      "@type": "City",
-      "name": "Wintzenheim"
-    },
-    {
-      "@type": "City",
-      "name": "Ingersheim"
-    },
-    {
-      "@type": "City",
-      "name": "Turckheim"
-    },
-    {
-      "@type": "City",
-      "name": "Sainte-Croix-en-Plaine"
-    }
-  ],
-  "sameAs": [
-    "https://maps.app.goo.gl/vkjFC9P3EUq2Zqzq7"
-  ]
-}
-</script>
+  
 
   <!-- Signale tout de suite au CSS que le JavaScript fonctionne (classe "js"),
        pour que le menu mobile soit replié dès l'affichage, sans clignotement -->
   <script>document.documentElement.classList.add('js');</script>
   <!-- defer : le script s'exécute une fois la page lue, sans la ralentir -->
-  <script src="assets/js/main.js?v=777a31a8" defer></script>
+  <script src="assets/js/main.js?v=b04b1072" defer></script>
 </head>
 <body>
   <!-- Lien d'évitement : permet aux utilisateurs de clavier ou de lecteur
@@ -167,14 +108,15 @@
   <div class="conteneur">
     <h1>Nos réalisations à Colmar et alentours</h1>
     <p class="intro">Quelques interventions récentes chez nos clients de Colmar et des environs.</p>
+    <p class="note-client"><span class="a-completer">[à confirmer avec le client : types de chantiers montrés ici]</span></p>
 
     <ul class="galerie">
-<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Chauffe-eau neuf installé dans une buanderie" loading="lazy"></figure></div><figcaption>Remplacement de chauffe-eau</figcaption></figure></li>
-<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Réparation d&#x27;un mécanisme de chasse d&#x27;eau" loading="lazy"></figure></div><figcaption>Réparation de chasse d&#x27;eau</figcaption></figure></li>
-<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Chaudière murale après entretien" loading="lazy"></figure></div><figcaption>Entretien de chaudière</figcaption></figure></li>
-<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Canalisation sous évier réparée" loading="lazy"></figure></div><figcaption>Réparation de fuite</figcaption></figure></li>
-<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Radiateur neuf posé sous une fenêtre" loading="lazy"></figure></div><figcaption>Pose de radiateur</figcaption></figure></li>
-<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Robinet mitigeur neuf sur un lavabo" loading="lazy"></figure></div><figcaption>Remplacement de robinetterie</figcaption></figure></li>
+<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Chauffe-eau neuf installé dans une buanderie" loading="lazy"></figure></div><figcaption><strong class="galerie__titre">Remplacement de chauffe-eau</strong><span class="galerie__ligne"><span class="a-completer">[à compléter : description du chantier]</span></span><span class="galerie__ligne">Commune : <span class="a-completer">[à compléter : commune]</span></span><span class="galerie__ligne">Date : <span class="a-completer">[à compléter : mois et année]</span></span></figcaption></figure></li>
+<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Réparation d&#x27;un mécanisme de chasse d&#x27;eau" loading="lazy"></figure></div><figcaption><strong class="galerie__titre">Réparation de chasse d&#x27;eau</strong><span class="galerie__ligne"><span class="a-completer">[à compléter : description du chantier]</span></span><span class="galerie__ligne">Commune : <span class="a-completer">[à compléter : commune]</span></span><span class="galerie__ligne">Date : <span class="a-completer">[à compléter : mois et année]</span></span></figcaption></figure></li>
+<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Chaudière murale après entretien" loading="lazy"></figure></div><figcaption><strong class="galerie__titre">Entretien de chaudière</strong><span class="galerie__ligne"><span class="a-completer">[à compléter : description du chantier]</span></span><span class="galerie__ligne">Commune : <span class="a-completer">[à compléter : commune]</span></span><span class="galerie__ligne">Date : <span class="a-completer">[à compléter : mois et année]</span></span></figcaption></figure></li>
+<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Canalisation sous évier réparée" loading="lazy"></figure></div><figcaption><strong class="galerie__titre">Réparation de fuite</strong><span class="galerie__ligne"><span class="a-completer">[à compléter : description du chantier]</span></span><span class="galerie__ligne">Commune : <span class="a-completer">[à compléter : commune]</span></span><span class="galerie__ligne">Date : <span class="a-completer">[à compléter : mois et année]</span></span></figcaption></figure></li>
+<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Radiateur neuf posé sous une fenêtre" loading="lazy"></figure></div><figcaption><strong class="galerie__titre">Pose de radiateur</strong><span class="galerie__ligne"><span class="a-completer">[à compléter : description du chantier]</span></span><span class="galerie__ligne">Commune : <span class="a-completer">[à compléter : commune]</span></span><span class="galerie__ligne">Date : <span class="a-completer">[à compléter : mois et année]</span></span></figcaption></figure></li>
+<li><figure><div class="galerie__cadre"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Robinet mitigeur neuf sur un lavabo" loading="lazy"></figure></div><figcaption><strong class="galerie__titre">Remplacement de robinetterie</strong><span class="galerie__ligne"><span class="a-completer">[à compléter : description du chantier]</span></span><span class="galerie__ligne">Commune : <span class="a-completer">[à compléter : commune]</span></span><span class="galerie__ligne">Date : <span class="a-completer">[à compléter : mois et année]</span></span></figcaption></figure></li>
 </ul>
   </div>
 </section>
@@ -199,7 +141,7 @@
           5 avenue du Général de Gaulle<br>
           68000 Colmar<br>
           <a href="tel:+33767664092">07 67 66 40 92</a><br>
-          E-mail : adresse à venir<br>
+          E-mail : <span class="a-completer">[à compléter : adresse e-mail]</span>
         </address>
       </div>
       <div>
@@ -210,6 +152,7 @@
         <p class="pied__titre">Liens</p>
         <ul class="pied__liens">
           <li><a href="contact.html">Contact et accès</a></li>
+          <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar" target="_blank" rel="noopener">Itinéraire</a></li>
           <li><a href="mentions-legales.html">Mentions légales</a></li>
         </ul>
       </div>
@@ -223,10 +166,7 @@
       <svg class="icone-appel" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
       Appeler
     </a>
-    <a class="barre-action__bouton" href="https://www.google.com/maps/dir/?api=1&amp;destination=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar" target="_blank" rel="noopener">
-      <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
-      Itinéraire
-    </a>
+    <a class="barre-action__bouton" href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-6 4V5a2 2 0 0 1 2-2z"/></svg>Devis SMS</a>
   </div>
 </body>
 </html>

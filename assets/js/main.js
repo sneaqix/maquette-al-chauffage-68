@@ -1,14 +1,16 @@
 /* ==========================================================================
    SCRIPT DU MODÈLE ARTISAN
    --------------------------------------------------------------------------
-   Quatre petites fonctions, sans bibliothèque :
+   Petites fonctions, sans bibliothèque :
      1. le menu ☰ sur téléphone
      2. la carte Google Maps chargée seulement au clic (pas de cookies avant)
      3. le bouton "Lire la suite" des avis trop longs
      4. les titres de section qui apparaissent au défilement
+     5. l'en-tête qui se cache quand on descend (téléphone)
+     6. le formulaire de devis
 
    Le site reste utilisable sans JavaScript : menu toujours affiché,
-   lien "Itinéraire" à la place de la carte.
+   lien "Itinéraire" à la place de la carte, formulaire envoyé normalement.
    ========================================================================== */
 
 // Note : la classe "js" est ajoutée sur <html> par une ligne dans le <head>
@@ -148,5 +150,137 @@ if (animationsOk && 'IntersectionObserver' in window) {
     if (titre.getBoundingClientRect().top < window.innerHeight) return;
     titre.classList.add('apparition');
     observateur.observe(titre);
+  });
+}
+
+
+/* 5. EN-TÊTE QUI SE CACHE QUAND ON DESCEND ---------------------------------------- */
+// Téléphone seulement, et jamais si le visiteur a demandé moins d'animations.
+// Il reste affiché : en haut de page, menu ouvert, ou élément de l'en-tête au clavier.
+const enteteCollant = document.querySelector('.entete');
+
+if (enteteCollant) {
+  const petitEcran = window.matchMedia('(max-width: 899.98px)');
+  const moinsDAnimations = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const SEUIL = 8; // en pixels : ignore les petits tremblements du doigt
+  let dernierY = window.scrollY;
+
+  const montrerEntete = () => enteteCollant.classList.remove('est-cache');
+
+  window.addEventListener('scroll', () => {
+    const y = Math.max(0, window.scrollY); // Safari renvoie des valeurs négatives en rebondissant
+
+    const doitResterVisible = !petitEcran.matches
+      || moinsDAnimations.matches
+      || y < 120
+      || document.documentElement.classList.contains('menu-ouvert')
+      || enteteCollant.querySelector(':focus-visible');
+
+    if (doitResterVisible) {
+      montrerEntete();
+      dernierY = y;
+    } else if (Math.abs(y - dernierY) >= SEUIL) {
+      enteteCollant.classList.toggle('est-cache', y > dernierY);
+      dernierY = y;
+    }
+  }, { passive: true }); // passive : ne ralentit jamais le défilement
+
+  enteteCollant.addEventListener('focusin', montrerEntete);
+  petitEcran.addEventListener('change', montrerEntete);
+  moinsDAnimations.addEventListener('change', montrerEntete);
+}
+
+
+/* 6. FORMULAIRE DE DEVIS ----------------------------------------------------------- */
+// Avec JS : erreurs sous les champs, puis envoi sans quitter la page (fetch).
+// Sans JS : le navigateur vérifie et envoie lui-même.
+const formulaire = document.querySelector('.formulaire');
+
+if (formulaire) {
+  const boutonEnvoi = formulaire.querySelector('.formulaire__envoi');
+  const etat = formulaire.querySelector('.formulaire__etat');
+  const champsObligatoires = [...formulaire.querySelectorAll('[required]')];
+  const demonstration = formulaire.hasAttribute('data-demo');
+
+  formulaire.noValidate = true; // nos messages remplacent les bulles du navigateur
+  formulaire.classList.add('est-pret');
+  boutonEnvoi.disabled = false;
+
+  // Affiche ou efface l'erreur d'un champ ; renvoie true si le champ est correct
+  const verifier = (champ) => {
+    const { valueMissing, valid } = champ.validity;
+    const vide = valueMissing || champ.value.trim() === '';
+    const correct = valid && !vide;
+
+    let message = '';
+    if (vide) message = champ.dataset.erreurVide;
+    else if (!valid) message = champ.dataset.erreurFormat;
+
+    champ.setAttribute('aria-invalid', String(!correct));
+    document.getElementById(`erreur-${champ.name}`).textContent = message;
+    return correct;
+  };
+
+  champsObligatoires.forEach((champ) => {
+    champ.addEventListener('input', () => {
+      // On corrige le message pendant la frappe, sans gronder avant le premier envoi
+      if (champ.getAttribute('aria-invalid') === 'true') verifier(champ);
+    });
+  });
+
+  const annoncer = (message, type) => {
+    etat.textContent = message;
+    etat.dataset.type = type;
+    etat.focus();
+  };
+
+  formulaire.addEventListener('submit', async (evenement) => {
+    evenement.preventDefault();
+    etat.textContent = '';
+
+    const incorrects = champsObligatoires.filter((champ) => !verifier(champ));
+    if (incorrects.length) {
+      incorrects[0].focus(); // le lecteur d'écran lit le champ et son message d'erreur
+      return;
+    }
+
+    if (demonstration) {
+      annoncer("Démonstration : rien n'a été envoyé. Sur le site final, votre demande partirait maintenant.", 'info');
+      return;
+    }
+
+    const donnees = new FormData(formulaire);
+    donnees.delete('redirect'); // réservé à l'envoi sans JS
+
+    const annulation = new AbortController();
+    const minuteur = setTimeout(() => annulation.abort(), 15000); // réseau mobile : 15 s maximum
+    boutonEnvoi.disabled = true;
+    boutonEnvoi.textContent = 'Envoi en cours…';
+
+    let envoye = false;
+    try {
+      const reponse = await fetch(formulaire.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: donnees,
+        signal: annulation.signal,
+      });
+      const resultat = await reponse.json();
+      envoye = reponse.ok && resultat.success === true;
+    } catch {
+      envoye = false; // pas de réseau, délai dépassé ou réponse illisible
+    }
+
+    clearTimeout(minuteur);
+    boutonEnvoi.disabled = false;
+    boutonEnvoi.textContent = 'Envoyer ma demande';
+
+    if (envoye) {
+      formulaire.reset();
+      annoncer('Merci, votre demande est bien envoyée.', 'succes');
+    } else {
+      // Les champs restent remplis : le visiteur ne perd rien
+      annoncer(`L'envoi n'a pas fonctionné. Réessayez, ou appelez le ${etat.dataset.telephone}.`, 'erreur');
+    }
   });
 }

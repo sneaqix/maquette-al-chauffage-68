@@ -32,14 +32,17 @@
   <meta property="og:description" content="Les services de AL Chauffage 68, plombier chauffagiste à Colmar : dépannage plomberie, chauffe-eau, chauffage et chaudière, sanitaires et salle de bains.">
   <meta property="og:url" content="https://sneaqix.github.io/maquette-al-chauffage-68/services.html">
   <!-- Image de partage (JPG ou PNG) : absente si le client n'a pas encore de photo -->
-  
+  <meta property="og:image" content="https://sneaqix.github.io/maquette-al-chauffage-68/assets/img/partage.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Visuel d'attente : photo du client à venir">
 
   <meta name="theme-color" content="#0b4f8a">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <!-- ?v=... : empreinte du fichier calculée par generer.py. Elle change dès que
        le fichier change, ce qui oblige le navigateur à recharger la nouvelle
        version au lieu de garder l'ancienne en mémoire (cache). -->
-  <link rel="stylesheet" href="assets/css/style.css?v=0b98cee3">
+  <link rel="stylesheet" href="assets/css/style.css?v=c45af33d">
 
   <!-- Les couleurs du client : elles remplacent celles par défaut de style.css -->
   <style>
@@ -49,77 +52,15 @@
     }
   </style>
 
-  <!-- Données structurées LocalBusiness : aident Google à comprendre
+  <!-- Données structurées LocalBusiness (accueil seulement) : aident Google à comprendre
        qui est l'entreprise, où elle est et quand elle est ouverte -->
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Plumber",
-  "@id": "https://sneaqix.github.io/maquette-al-chauffage-68/#entreprise",
-  "name": "AL Chauffage 68",
-  "description": "Dépannage plomberie, chauffe-eau et chauffage à Colmar, 7 jours sur 7 de 7 h à 22 h.",
-  "url": "https://sneaqix.github.io/maquette-al-chauffage-68/",
-  "telephone": "+33767664092",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "5 avenue du Général de Gaulle",
-    "postalCode": "68000",
-    "addressLocality": "Colmar",
-    "addressCountry": "FR"
-  },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ],
-      "opens": "07:00",
-      "closes": "22:00"
-    }
-  ],
-  "areaServed": [
-    {
-      "@type": "City",
-      "name": "Colmar"
-    },
-    {
-      "@type": "City",
-      "name": "Horbourg-Wihr"
-    },
-    {
-      "@type": "City",
-      "name": "Wintzenheim"
-    },
-    {
-      "@type": "City",
-      "name": "Ingersheim"
-    },
-    {
-      "@type": "City",
-      "name": "Turckheim"
-    },
-    {
-      "@type": "City",
-      "name": "Sainte-Croix-en-Plaine"
-    }
-  ],
-  "sameAs": [
-    "https://maps.app.goo.gl/vkjFC9P3EUq2Zqzq7"
-  ]
-}
-</script>
+  
 
   <!-- Signale tout de suite au CSS que le JavaScript fonctionne (classe "js"),
        pour que le menu mobile soit replié dès l'affichage, sans clignotement -->
   <script>document.documentElement.classList.add('js');</script>
   <!-- defer : le script s'exécute une fois la page lue, sans la ralentir -->
-  <script src="assets/js/main.js?v=777a31a8" defer></script>
+  <script src="assets/js/main.js?v=b04b1072" defer></script>
 </head>
 <body>
   <!-- Lien d'évitement : permet aux utilisateurs de clavier ou de lecteur
@@ -167,13 +108,22 @@
   <div class="conteneur">
     <h1>Nos services de plomberie et chauffage à Colmar</h1>
     <p class="intro">Pour les particuliers de Colmar et des environs : dépannage, remplacement et entretien de vos installations de plomberie et de chauffage.</p>
+    <p class="note-client"><span class="a-completer">[à confirmer avec le client : liste des services, descriptions, clientèle de particuliers]</span></p>
 
     <ul class="grille-cartes">
-<li class="carte-service"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Réparation d&#x27;une fuite sous un évier" loading="lazy"></figure><h2>Dépannage plomberie</h2><p>Fuite d&#x27;eau, canalisation bouchée, chasse d&#x27;eau qui coule ou ne se remplit plus : nous intervenons rapidement, 7 jours sur 7.</p></li>
-<li class="carte-service"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Chauffe-eau électrique installé par AL Chauffage 68" loading="lazy"></figure><h2>Chauffe-eau</h2><p>Plus d&#x27;eau chaude ? Réparation ou remplacement de votre chauffe-eau.</p></li>
-<li class="carte-service"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Entretien d&#x27;une chaudière murale" loading="lazy"></figure><h2>Chauffage et chaudière</h2><p>Dépannage et entretien de chaudières et de radiateurs, pour passer l&#x27;hiver au chaud.</p></li>
-<li class="carte-service"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : WC suspendu et lavabo posés dans une salle de bains" loading="lazy"></figure><h2>Sanitaires et salle de bains</h2><p>Pose et remplacement de WC, lavabos, douches et robinetterie.</p></li>
+<li class="carte-service"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Réparation d&#x27;une fuite sous un évier" loading="lazy"></figure><h2>Dépannage plomberie</h2><p>Fuite d&#x27;eau, canalisation bouchée, chasse d&#x27;eau qui coule ou ne se remplit plus : nous intervenons rapidement, 7 jours sur 7.</p><p class="carte-service__prix">À partir de <span class="a-completer">[à compléter : prix]</span>&nbsp;€&nbsp;TTC</p></li>
+<li class="carte-service"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Chauffe-eau électrique installé par AL Chauffage 68" loading="lazy"></figure><h2>Chauffe-eau</h2><p>Plus d&#x27;eau chaude ? Réparation ou remplacement de votre chauffe-eau.</p><p class="carte-service__prix">À partir de <span class="a-completer">[à compléter : prix]</span>&nbsp;€&nbsp;TTC</p></li>
+<li class="carte-service"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Entretien d&#x27;une chaudière murale" loading="lazy"></figure><h2>Chauffage et chaudière</h2><p>Dépannage et entretien de chaudières et de radiateurs, pour passer l&#x27;hiver au chaud.</p><p class="carte-service__prix">À partir de <span class="a-completer">[à compléter : prix]</span>&nbsp;€&nbsp;TTC</p></li>
+<li class="carte-service"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : WC suspendu et lavabo posés dans une salle de bains" loading="lazy"></figure><h2>Sanitaires et salle de bains</h2><p>Pose et remplacement de WC, lavabos, douches et robinetterie.</p><p class="carte-service__prix">À partir de <span class="a-completer">[à compléter : prix]</span>&nbsp;€&nbsp;TTC</p><p class="note-client"><span class="a-completer">[à confirmer avec le client : service proposé ?]</span></p></li>
+<li class="carte-service"><figure class="photo-attente"><img class="photo" src="assets/img/attente.svg" alt="Image d'attente : Pompe à chaleur ou climatisation" loading="lazy"></figure><h2>Pompe à chaleur / climatisation</h2><p><span class="a-completer">[à compléter : prestations proposées, par exemple pose, entretien, dépannage]</span></p><p class="carte-service__prix">À partir de <span class="a-completer">[à compléter : prix]</span>&nbsp;€&nbsp;TTC</p><p class="note-client"><span class="a-completer">[à confirmer avec le client : service proposé ?]</span></p></li>
 </ul>
+    <div class="tarifs">
+<h2>Tarifs</h2>
+<ul>
+<li>Déplacement : <span class="a-completer">[à compléter : frais de déplacement]</span> € TTC — devis gratuit <span class="a-completer">[à confirmer avec le client : devis gratuit]</span></li>
+<li>Main-d&#x27;œuvre : <span class="a-completer">[à compléter : taux horaire]</span> € TTC de l&#x27;heure</li>
+</ul>
+</div>
   </div>
 </section>
 
@@ -181,7 +131,10 @@
   <div class="conteneur">
     <h2>Un devis, une question ?</h2>
     <p>Ouvert tous les jours : 7 h – 22 h.</p>
-    <a class="bouton bouton--inverse" href="tel:+33767664092">Appeler le 07 67 66 40 92</a>
+    <div class="boutons boutons--centre">
+      <a class="bouton bouton--inverse" href="tel:+33767664092">Appeler le 07 67 66 40 92</a>
+      <a class="bouton bouton--contour" href="contact.html#devis">Demander un devis</a>
+    </div>
   </div>
 </section>
 
@@ -198,7 +151,7 @@
           5 avenue du Général de Gaulle<br>
           68000 Colmar<br>
           <a href="tel:+33767664092">07 67 66 40 92</a><br>
-          E-mail : adresse à venir<br>
+          E-mail : <span class="a-completer">[à compléter : adresse e-mail]</span>
         </address>
       </div>
       <div>
@@ -209,6 +162,7 @@
         <p class="pied__titre">Liens</p>
         <ul class="pied__liens">
           <li><a href="contact.html">Contact et accès</a></li>
+          <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar" target="_blank" rel="noopener">Itinéraire</a></li>
           <li><a href="mentions-legales.html">Mentions légales</a></li>
         </ul>
       </div>
@@ -222,10 +176,7 @@
       <svg class="icone-appel" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
       Appeler
     </a>
-    <a class="barre-action__bouton" href="https://www.google.com/maps/dir/?api=1&amp;destination=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar" target="_blank" rel="noopener">
-      <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
-      Itinéraire
-    </a>
+    <a class="barre-action__bouton" href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-6 4V5a2 2 0 0 1 2-2z"/></svg>Devis SMS</a>
   </div>
 </body>
 </html>
