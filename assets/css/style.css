@@ -4,7 +4,9 @@
    Écrit "mobile d'abord" : les règles de base sont pour le téléphone,
    les blocs @media (min-width: ...) ajoutent la mise en page grand écran.
 
-   Infos manquantes : classe .a-completer (jaune, pointillés), voir section 3.
+   Deux couleurs : bleu (principale) pour la structure, orange (action) pour agir.
+   Le jaune (accent) sert uniquement aux étoiles.
+   Infos manquantes : classe .a-completer (gris, pointillés orange), voir section 3.
 
    Sommaire :
      1. Variables (couleurs, espacements)
@@ -22,17 +24,19 @@
 
 
 /* 1. VARIABLES ------------------------------------------------------------
-   Les deux couleurs du client sont redéfinies dans le <head> de chaque page
+   Les couleurs du client sont redéfinies dans le <head> de chaque page
    (voir base.html). Les valeurs ci-dessous ne servent que par défaut.
    Règle : le texte blanc doit rester lisible sur --couleur-principale
    (contraste d'au moins 4,5:1, vérifiable sur https://webaim.org/resources/contrastchecker/). */
 :root {
   --cible-tactile: 44px;           /* taille minimum de ce qu'on touche du doigt */
-  --couleur-principale: #0b4f8a;   /* boutons, liens, titres forts */
-  --couleur-accent: #e8a317;       /* étoiles, petits détails */
+  --couleur-principale: #0b4f8a;   /* structure : titres, liens, fonds, boutons secondaires */
+  --couleur-action: #c2410c;       /* action principale : Appeler, Envoyer */
+  --couleur-accent: #e8a317;       /* les étoiles, et rien d'autre */
 
   /* Teinte plus foncée calculée automatiquement (survol des boutons) */
   --couleur-principale-fonce: color-mix(in srgb, var(--couleur-principale) 80%, black);
+  --couleur-action-fonce: color-mix(in srgb, var(--couleur-action) 80%, black);
   /* Fond très clair teinté de la couleur du client */
   --couleur-fond-teinte: color-mix(in srgb, var(--couleur-principale) 6%, white);
 
@@ -40,6 +44,9 @@
   --texte-doux: #4f5b6b;
   --fond: #ffffff;
   --bordure: #dde3ea;
+  --texte-sur-fonce: #d5dbe3;
+
+  --police-titres: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
   --rayon: 8px;
   --ombre: 0 1px 3px rgb(0 0 0 / 0.08), 0 4px 12px rgb(0 0 0 / 0.05);
@@ -50,6 +57,21 @@
 
 
 /* 2. BASE ----------------------------------------------------------------- */
+/* Barlow, hébergée avec le site : aucune requête vers Google (licence : fonts/OFL.txt).
+   swap : le texte s'affiche tout de suite en police système, puis passe en Barlow. */
+@font-face {
+  font-family: "Barlow";
+  src: url("../fonts/barlow-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url("../fonts/barlow-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after {
@@ -57,7 +79,7 @@
 }
 
 html {
-  /* Polices du système : aucune police à télécharger, affichage immédiat */
+  /* Texte courant en police du système (Barlow : titres, nom et boutons seulement) */
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   line-height: 1.6;
   color: var(--texte);
@@ -76,13 +98,26 @@ body {
 }
 
 h1, h2, h3 {
-  line-height: 1.2;
+  line-height: 1.15;
   margin: 0 0 0.6em;
-  color: var(--texte);
+  font-family: var(--police-titres);
+  color: var(--couleur-principale);
+  overflow-wrap: break-word;
+  text-wrap: balance;              /* évite un mot tout seul sur la dernière ligne */
 }
-h1 { font-size: clamp(1.9rem, 6vw, 2.8rem); }
-h2 { font-size: clamp(1.45rem, 4vw, 1.9rem); }
-h3 { font-size: 1.2rem; }
+h1 { font-size: clamp(2.3rem, 9vw, 3.5rem); font-weight: 700; }
+h2 { font-size: clamp(1.5rem, 4.2vw, 2rem); font-weight: 600; }
+h3 { font-size: 1.25rem; font-weight: 600; }
+/* Le petit trait orange sous chaque h2 du site */
+h2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 4px;
+  margin-top: 0.4rem;
+  border-radius: 2px;
+  background: var(--couleur-action);
+}
 
 p { margin: 0 0 1em; }
 
@@ -132,7 +167,9 @@ address { font-style: normal; }
   color: #fff;
   border-radius: var(--rayon);
 }
-.lien-evitement:focus { top: 0.5rem; color: #fff; }
+.lien-evitement:hover,
+.lien-evitement:focus { color: #fff; }
+.lien-evitement:focus { top: 0.5rem; }
 
 
 /* 3. UTILITAIRES ---------------------------------------------------------- */
@@ -144,7 +181,7 @@ address { font-style: normal; }
 }
 .conteneur--etroit { max-width: 760px; }
 
-.section { padding-block: 3rem; }
+.section { padding-block: 2.25rem; }
 .section--fond { background: var(--couleur-fond-teinte); }
 
 /* Section d'appel final : fond de la couleur du client, texte blanc */
@@ -154,20 +191,26 @@ address { font-style: normal; }
   text-align: center;
 }
 .section--appel h2 { color: #fff; }
+.section--appel h2::after { margin-inline: auto; }
+
+/* Pictogrammes au trait (tracés : ICONES dans generer.py) */
+.icone { flex-shrink: 0; }
+.ligne-icone {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.ligne-icone > .icone { margin-top: 0.15em; }
+.section--appel .ligne-icone { justify-content: center; }
+.titre-icone .icone {
+  margin-right: 0.4rem;
+  vertical-align: -0.15em;
+}
 
 .intro {
   font-size: 1.125rem;
   color: var(--texte-doux);
   max-width: 65ch;
-}
-
-.surtitre {
-  margin-bottom: 0.4rem;
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--couleur-principale);
 }
 
 .lien-fleche {
@@ -192,34 +235,34 @@ address { font-style: normal; }
   padding: 0.75rem 1.4rem;
   border: 2px solid var(--couleur-principale);
   border-radius: var(--rayon);
-  font: inherit;
+  gap: 0.5rem;
+  font-family: var(--police-titres);
+  font-size: 1.125rem;
   font-weight: 700;
+  line-height: 1.3;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
 }
-.bouton--principal {
-  background: var(--couleur-principale);
+.numero { white-space: nowrap; }
+/* Action principale : orange */
+.bouton--action {
+  background: var(--couleur-action);
+  border-color: var(--couleur-action);
   color: #fff;
 }
-.bouton--principal:hover {
-  background: var(--couleur-principale-fonce);
-  border-color: var(--couleur-principale-fonce);
+.bouton--action:hover {
+  background: var(--couleur-action-fonce);
+  border-color: var(--couleur-action-fonce);
   color: #fff;
 }
+/* Sur fond bleu, l'orange se détache mal (1,6:1) : bordure blanche */
+.section--appel .bouton--action { border-color: #fff; }
 .bouton--secondaire {
   background: #fff;
   color: var(--couleur-principale);
 }
 .bouton--secondaire:hover { background: var(--couleur-fond-teinte); }
-/* Bouton blanc sur fond coloré (section d'appel) */
-.bouton--inverse {
-  background: #fff;
-  border-color: #fff;
-  color: var(--couleur-principale);
-}
-.bouton--inverse:hover { background: var(--couleur-fond-teinte); color: var(--couleur-principale-fonce); }
-
 /* Bouton transparent bordé de blanc (2e bouton d'une section d'appel) */
 .bouton--contour {
   background: transparent;
@@ -234,33 +277,32 @@ address { font-style: normal; }
    --grand-ecran : seulement ordinateur */
 .bouton--grand-ecran { display: none; }
 
-/* Boutons empilés (page Contact) : même largeur, l'un sous l'autre */
-.boutons--colonne {
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 0 0 1rem;
+/* Téléphone : boutons principaux en pleine largeur, l'un sous l'autre */
+@media (max-width: 639.98px) {
+  .accueil-hero .boutons,
+  .contact__actions,
+  .section--appel .boutons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .section--appel .conteneur > .bouton { width: 100%; }
 }
 
-/* Info que le client doit fournir ou confirmer (posée par texte() dans generer.py).
-   Couleurs fixes : lisible sur fond blanc, bleu ou sombre (contraste 8:1). */
+/* Info que le client doit fournir ou confirmer (posée par texte() dans generer.py) :
+   discrète, mais repérable au soulignement en pointillés orange. */
 .a-completer {
-  padding: 0.05em 0.35em;
-  border: 1px dashed #8a6500;
-  border-radius: 4px;
-  background: #fff4c2;
-  color: #4a3600;
-  font-weight: 600;
+  color: var(--texte-doux);
+  font-weight: 400;
   letter-spacing: normal;
   text-transform: none;
+  text-decoration: underline dotted var(--couleur-action);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
   overflow-wrap: anywhere;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;     /* bordure complète même sur deux lignes */
 }
-.note-client {
-  margin: 1rem 0 0;
-  font-size: 0.875rem;
-  line-height: 1.9;
-}
+/* Sur fond sombre, le gris serait illisible (2,3:1) */
+.pied .a-completer,
+.section--appel .a-completer { color: var(--texte-sur-fonce); }
 
 /* Image d'attente "Photo du client" (maquette) */
 .photo-attente {
@@ -281,7 +323,6 @@ address { font-style: normal; }
 /* Zones tactiles : les liens isolés font au moins 44 px de haut
    (les liens au milieu d'une phrase en sont dispensés par les règles WCAG). */
 .logo,
-.note-google a,
 .lien-tactile,
 .pied a {
   display: inline-flex;
@@ -313,9 +354,11 @@ address { font-style: normal; }
 }
 
 .logo {
-  font-weight: 800;
-  font-size: 1.2rem;
-  color: var(--texte);
+  font-family: var(--police-titres);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.15;
+  color: var(--couleur-principale);
   text-decoration: none;
 }
 
@@ -332,6 +375,7 @@ address { font-style: normal; }
   border-radius: var(--rayon);
   background: #fff;
   font: inherit;
+  font-family: var(--police-titres);
   font-weight: 600;
   color: var(--texte);
   cursor: pointer;
@@ -465,8 +509,8 @@ address { font-style: normal; }
 .bandeau-maquette {
   margin: 0;
   padding: 0.4rem var(--espace);
-  background: #fff4d6;
-  color: #5c4300;
+  background: #eef1f5;             /* gris : le jaune est réservé aux étoiles */
+  color: var(--texte-doux);
   font-size: 0.875rem;
   text-align: center;
 }
@@ -476,27 +520,64 @@ address { font-style: normal; }
 
 /* --- Accueil --- */
 .accueil-hero {
-  padding-block: 2.25rem 3rem;
+  padding-block: 1.5rem;
   background: var(--couleur-fond-teinte);
 }
+.accueil-hero h1 { margin-bottom: 0.3em; }
+.accueil-hero .boutons { margin-top: 1rem; }
 .accroche {
-  font-size: 1.15rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  line-height: 1.45;
   color: var(--texte-doux);
   max-width: 40ch;
 }
-.accueil-hero__photo { margin-top: 2rem; }
 
-/* Note Google : "★ Noté 5,0 sur Google (228 avis)" */
-.note-google {
+/* "Dépannage 7j/7 · 7 h – 22 h" */
+.pastille {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  margin: 0;
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: var(--couleur-principale);
+  color: #fff;
+  font-size: 0.9rem;
   font-weight: 600;
+  line-height: 1.4;
 }
-.note-google__etoiles { color: var(--couleur-accent); letter-spacing: 0.05em; white-space: nowrap; }
 
-/* Grilles de cartes (services, atouts) : 1 colonne en mobile */
+/* Badge Google : ★★★★★ 5,0 228 avis Google */
+.note-google {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 0.5rem;
+  min-height: 48px;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: #fff;
+  box-shadow: var(--ombre);
+  color: var(--texte);
+  text-decoration: none;
+}
+a.note-google:hover { border-color: var(--couleur-principale); color: var(--texte); }
+.note-google__etoiles { color: var(--couleur-accent); letter-spacing: 0.05em; white-space: nowrap; }
+.note-google strong { font-size: 1.25rem; }
+a.note-google .note-google__avis { color: var(--couleur-principale); text-decoration: underline; }
+
+/* Illustration : petite sur téléphone, pour ne pas pousser le contenu */
+.accueil-hero__photo { margin-top: 1rem; }
+.accueil-hero__photo .illustration {
+  width: 100%;
+  height: 128px;
+  object-fit: contain;
+}
+.accueil-hero__photo .photo { max-height: 220px; }
+
+/* Grilles de cartes (services) : 1 colonne en mobile */
 .grille-cartes {
   display: grid;
   gap: 1rem;
@@ -512,6 +593,50 @@ address { font-style: normal; }
   box-shadow: var(--ombre);
 }
 .carte-service p:last-child { margin-bottom: 0; }
+.carte-service__icone,
+.tuile > .icone { color: var(--couleur-principale); }
+
+/* Accueil : carte compacte (icône à gauche), cliquable en entier */
+.grille-cartes--apercu { gap: 0.6rem; margin: 1rem 0 0.25rem; }
+.carte-service--lien {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.8rem;
+}
+.carte-service--lien .carte-service__icone {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--couleur-fond-teinte);
+}
+.carte-service--lien h3 { margin-bottom: 0.15rem; }
+.carte-service--lien p { font-size: 0.95rem; line-height: 1.4; }
+/* Un seul lien (le titre), dont le ::after recouvre toute la carte */
+.carte-service__lien { text-decoration: none; }
+.carte-service__lien::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--rayon);
+}
+.carte-service__lien:focus-visible { outline: 0; }
+.carte-service__lien:focus-visible::after { outline: 3px solid var(--texte); outline-offset: 2px; }
+.carte-service--lien:hover { border-color: var(--couleur-principale); }
+
+/* Page Services : icône à côté du titre, ancre par service */
+.carte-service__titre {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.carte-service__titre h2 { font-size: 1.5rem; }
+.carte-service:target { border-color: var(--couleur-principale); }
+.grille-cartes--detail .photo { aspect-ratio: 16 / 9; }
 .carte-service .photo,
 .carte-service .photo-attente { margin-bottom: 1rem; }
 
@@ -527,34 +652,114 @@ address { font-style: normal; }
 }
 .tarifs ul { margin: 0; padding-left: 1.2rem; line-height: 1.9; }
 
-/* Liste des atouts avec une coche */
-.atouts {
+/* Tuiles de confiance : 2 colonnes sur téléphone, 4 sur ordinateur */
+.tuiles {
   display: grid;
-  gap: 1rem;
-  margin: 1.5rem 0 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: 1rem 0 0;
   padding: 0;
   list-style: none;
 }
-.atouts li {
-  position: relative;
-  padding-left: 2rem;
+.tuile {
+  padding: 0.8rem 0.5rem;
+  border-radius: var(--rayon);
+  background: var(--couleur-fond-teinte);
+  text-align: center;
 }
-.atouts li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 0;
-  font-weight: 800;
+/* Nombre impair de tuiles : la dernière prend toute la largeur */
+@media (max-width: 899.98px) {
+  .tuile:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+.tuile > .icone--etoile { color: var(--couleur-accent); }
+.tuile__valeur {
+  margin: 0.1rem 0 0;
+  font-family: var(--police-titres);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
   color: var(--couleur-principale);
 }
-
-/* Avis Google choisis à la main : 1 colonne en mobile, 2 ou 3 sur grand écran */
-.avis {
-  display: grid;
-  gap: 1rem;
-  margin: 1.5rem 0;
+.tuile__valeur .a-completer { font-size: 0.9rem; }
+.tuile__etoile { color: var(--couleur-accent); }
+.tuile__libelle {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--texte-doux);
+}
+/* La ligne plus discrète sous les tuiles */
+.garanties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin: 1rem 0 0;
   padding: 0;
   list-style: none;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--texte-doux);
+}
+.garanties > li > .icone { color: var(--couleur-principale); }
+
+/* Avis Google choisis à la main : carrousel sous 900 px, grille au-delà */
+.avis {
+  position: relative;              /* repère des positions des cartes (main.js) */
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+/* Carrousel 100 % CSS : le doigt ou le clavier font défiler, main.js n'ajoute que le compteur */
+@media (max-width: 899.98px) {
+  .avis {
+    display: flex;
+    margin-inline: calc(-1 * var(--espace));
+    padding: 0.25rem var(--espace) 0.5rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--espace);
+    scrollbar-width: thin;
+  }
+  .avis > li {
+    flex: 0 0 85%;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+  .avis > li:only-child { flex-basis: 100%; }
+  .avis:focus-visible { outline-offset: -3px; }
+}
+.carrousel__commandes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.carrousel__fleche {
+  width: var(--cible-tactile);
+  height: var(--cible-tactile);
+  padding: 0;
+  border: 2px solid var(--couleur-principale);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--couleur-principale);
+  font: 700 1.6rem/1 var(--police-titres);
+  cursor: pointer;
+}
+/* aria-disabled plutôt que disabled : le bouton garde le focus clavier */
+.carrousel__fleche[aria-disabled="true"] {
+  border-color: var(--texte-doux);
+  border-style: dashed;
+  color: var(--texte-doux);
+  cursor: default;
+}
+.carrousel__compteur {
+  min-width: 3.5rem;
+  margin: 0;
+  font-weight: 700;
+  text-align: center;
 }
 .avis-carte figure {
   height: 100%;
@@ -594,6 +799,7 @@ address { font-style: normal; }
   border: 0;
   background: none;
   font: inherit;
+  font-family: var(--police-titres);
   font-weight: 600;
   color: var(--couleur-principale);
   text-decoration: underline;
@@ -640,18 +846,17 @@ address { font-style: normal; }
   color: var(--couleur-principale);
 }
 .faq__item[open] summary::after { content: "−"; }
-.faq__reponse { padding: 0 0.25rem 0.5rem; line-height: 1.9; }
+.faq__reponse { padding: 0 0.25rem 0.5rem; line-height: 1.7; }
 .faq__reponse ul { margin: 0 0 1em; padding-left: 1.2rem; }
 .faq__reponse li { margin-bottom: 0.5rem; }
 /* Même apparence que .a-completer, sans être compté comme un emplacement de plus */
 .faq__badge {
   display: inline-block;
-  padding: 0 0.4em;
-  border: 1px dashed #8a6500;
-  border-radius: 4px;
-  background: #fff4c2;
-  color: #4a3600;
+  color: var(--texte-doux);
+  border-bottom: 2px dotted var(--couleur-action);
   font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 /* --- Réalisations : galerie --- */
@@ -672,7 +877,7 @@ address { font-style: normal; }
   margin-top: 0.4rem;
   font-size: 0.95rem;
   color: var(--texte-doux);
-  line-height: 1.9;
+  line-height: 1.6;
 }
 .galerie__titre { display: block; color: var(--texte); }
 .galerie__ligne { display: block; }
@@ -683,16 +888,17 @@ address { font-style: normal; }
   display: grid;
   gap: 1rem;
 }
-.a-propos__sections .carte-info { background: #fff; line-height: 1.9; }
-.a-propos__sections h2 { font-size: 1.3rem; }
+.a-propos__sections .carte-info { background: #fff; line-height: 1.7; }
+.a-propos__sections h2 { font-size: 1.4rem; }
 .a-propos__sections ul { margin: 0; padding-left: 1.2rem; }
 
 /* --- Contact --- */
 .contact__grille {
   display: grid;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 2.5rem;
 }
+.contact__actions { margin-top: 1rem; }
 .carte-info {
   padding: 1.25rem;
   border: 1px solid var(--bordure);
@@ -746,9 +952,8 @@ html:not(.js) .carte { display: none; }
 /* --- Formulaire de devis --- */
 .devis {
   max-width: 680px;
-  margin-top: 2.5rem;
+  margin-top: 2rem;
 }
-.devis__demo,
 .devis__retour,
 .formulaire__etat:not(:empty) {
   padding: 0.75rem 1rem;
@@ -756,7 +961,12 @@ html:not(.js) .carte { display: none; }
   border-radius: var(--rayon);
   background: var(--couleur-fond-teinte);
 }
-.devis__demo { line-height: 1.9; }
+.devis__demo {
+  margin: 0.75rem 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--texte-doux);
+}
 /* Confirmation sans JS : Web3Forms renvoie sur contact.html#demande-envoyee */
 .devis__retour { display: none; }
 .devis__retour:target { display: block; }
@@ -832,21 +1042,21 @@ html:not(.js) .carte { display: none; }
 .formulaire__etat[data-type="erreur"]:not(:empty) { border-color: #b3261e; background: #fdecea; }
 .devis__rgpd {
   font-size: 0.875rem;
-  line-height: 1.9;
+  line-height: 1.6;
   color: var(--texte-doux);
 }
 
 /* --- Mentions légales --- */
-.texte-long p { line-height: 1.9; }    /* place pour les repères jaunes qui se suivent */
+.texte-long p { line-height: 1.75; }   /* place pour les pointillés des repères */
 .texte-long h3 { margin: 1.4rem 0 0.3rem; font-size: 1.05rem; }
-.texte-long h2 { margin-top: 2rem; font-size: 1.3rem; }
+.texte-long h2 { margin-top: 2rem; font-size: 1.4rem; }
 
 
 /* 7. PIED DE PAGE --------------------------------------------------------- */
 .pied {
   padding-block: 2.5rem 1rem;
   background: #1c2430;
-  color: #d5dbe3;
+  color: var(--texte-sur-fonce);
   font-size: 0.95rem;
 }
 .pied a { color: #fff; }
@@ -899,6 +1109,8 @@ html:not(.js) .carte { display: none; }
   gap: 0.5rem;
   border: 2px solid var(--couleur-principale);
   border-radius: var(--rayon);
+  font-family: var(--police-titres);
+  font-size: 1.125rem;
   font-weight: 700;
   text-decoration: none;
   color: var(--couleur-principale);
@@ -906,10 +1118,26 @@ html:not(.js) .carte { display: none; }
   white-space: nowrap;
 }
 .barre-action__bouton--appel {
-  background: var(--couleur-principale);
+  background: var(--couleur-action);
+  border-color: var(--couleur-action);
   color: #fff;
 }
-.barre-action__bouton--appel:hover { color: #fff; }
+.barre-action__bouton--appel:hover {
+  background: var(--couleur-action-fonce);
+  border-color: var(--couleur-action-fonce);
+  color: #fff;
+}
+/* Posée par main.js sur l'accueil, tant que le "Appeler" du haut est à l'écran.
+   visibility : la barre cachée sort aussi de la navigation au clavier. */
+.barre-action.est-masquee {
+  transform: translateY(calc(100% + 12px));
+  visibility: hidden;
+}
+/* Menu ouvert : il recouvre le bouton du haut, la barre doit donc revenir */
+.menu-ouvert .barre-action.est-masquee {
+  transform: none;
+  visibility: visible;
+}
 
 
 /* 9. GRAND ÉCRAN ---------------------------------------------------------- */
@@ -917,12 +1145,11 @@ html:not(.js) .carte { display: none; }
 /* Tablette et plus (à partir de 640 px) : grilles sur 2 colonnes */
 @media (min-width: 640px) {
   .grille-cartes,
-  .atouts,
-  .avis,
   .galerie,
   .a-propos__sections,
   .contact__grille { grid-template-columns: repeat(2, 1fr); }
   .pied__grille { grid-template-columns: repeat(3, 1fr); }
+  .formulaire__envoi { width: auto; min-width: 260px; }
 }
 
 /* Ordinateur (à partir de 900 px) : menu en ligne, plus de barre d'action */
@@ -937,14 +1164,14 @@ html:not(.js) .carte { display: none; }
   .bouton--mobile { display: none; }
   .bouton--grand-ecran { display: inline-flex; }
 
-  .section { padding-block: 4.5rem; }
+  .section { padding-block: 4rem; }
 
   /* Le menu s'affiche toujours en ligne, le bouton ☰ disparaît */
   .entete__ligne { flex-wrap: nowrap; min-height: 76px; }
   .js .menu-bouton { display: none; }
   .menu,
   .js .menu { display: block; width: auto; }
-  .menu__liste { display: flex; gap: 1.5rem; padding: 0; }
+  .menu__liste { display: flex; gap: 1.25rem; padding: 0; }
   .menu__lien { padding: 0.5rem 0; border-bottom: 2px solid transparent; }
   .menu__icone { display: none; }
   .menu__lien:hover,
@@ -953,19 +1180,27 @@ html:not(.js) .carte { display: none; }
   .entete__tel {
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
+    gap: 0.4rem;
+    min-height: 48px;
     padding: 0.5rem 1rem;
     border-radius: var(--rayon);
-    background: var(--couleur-principale);
+    background: var(--couleur-action);
     color: #fff;
+    font-family: var(--police-titres);
+    font-size: 1.125rem;
     font-weight: 700;
     text-decoration: none;
     white-space: nowrap;
   }
-  .entete__tel:hover { background: var(--couleur-principale-fonce); color: #fff; }
+  .entete__tel:hover { background: var(--couleur-action-fonce); color: #fff; }
 
   /* Accueil et À propos : texte à gauche, photo à droite */
-  .accueil-hero { padding-block: 4.5rem; }
+  .accueil-hero { padding-block: 3.5rem; }
+  .accueil-hero__photo .illustration { height: 320px; }
+  /* Boutons un peu resserrés : ils tiennent côte à côte dès 900 px */
+  .accueil-hero .boutons { gap: 0.6rem; }
+  .accueil-hero .bouton { padding-inline: 0.75rem; }
+  .accueil-hero__photo .photo { max-height: none; }
   .accueil-hero__grille,
   .a-propos__grille {
     display: grid;
@@ -973,11 +1208,20 @@ html:not(.js) .carte { display: none; }
     gap: 3rem;
     align-items: center;
   }
+  .accueil-hero__grille { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 2rem; }
   .accueil-hero__photo,
   .a-propos__photo { margin-top: 0; }
 
-  .grille-cartes,
   .galerie { grid-template-columns: repeat(3, 1fr); }
+  .grille-cartes--apercu { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  /* Une colonne par tuile : 4 pour AL Chauffage 68 */
+  .tuiles {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+  }
+  .carte-service--lien { flex-direction: column; padding: 1.25rem; }
+  .carrousel__commandes { display: none; }
   /* Avis : autant de colonnes que possible (au moins 240 px chacune),
      donc 4 avis = 4 colonnes sur une seule ligne */
   .avis { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
@@ -1050,6 +1294,9 @@ html:not(.js) .carte { display: none; }
     20%, 60% { transform: rotate(-14deg); }
     40%, 80% { transform: rotate(14deg); }
   }
+
+  /* --- Barre du bas qui glisse (classe posée après le premier placement, sinon elle clignote) --- */
+  .barre-action.est-animee { transition: transform 0.25s ease-out, visibility 0.25s; }
 
   /* --- En-tête qui se cache en descendant --- */
   .entete { transition: transform 0.25s ease-out; }

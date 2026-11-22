@@ -8,9 +8,12 @@
      4. les titres de section qui apparaissent au défilement
      5. l'en-tête qui se cache quand on descend (téléphone)
      6. le formulaire de devis
+     7. le compteur et les flèches du carrousel d'avis
+     8. la barre du bas qui arrive quand le bouton "Appeler" sort de l'écran
 
    Le site reste utilisable sans JavaScript : menu toujours affiché,
-   carte masquée, formulaire envoyé normalement.
+   carte masquée, formulaire envoyé normalement, avis à faire glisser,
+   barre du bas toujours affichée.
    ========================================================================== */
 
 // Note : la classe "js" est ajoutée sur <html> par une ligne dans le <head>
@@ -283,4 +286,114 @@ if (formulaire) {
       annoncer(`L'envoi n'a pas fonctionné. Réessayez, ou appelez le ${etat.dataset.telephone}.`, 'erreur');
     }
   });
+}
+
+
+/* 7. CARROUSEL D'AVIS --------------------------------------------------------------- */
+// Le défilement est fait par le CSS. Ici : compteur "1 / 4", flèches et clavier.
+const commandesAvis = document.querySelector('.carrousel__commandes');
+
+if (commandesAvis) {
+  const liste = document.querySelector('.carrousel .avis');
+  const cartes = [...liste.children];
+  const fleches = [...commandesAvis.querySelectorAll('.carrousel__fleche')];
+  const [compteurVu, compteurLu] = commandesAvis.querySelectorAll('.carrousel__compteur span');
+  const enGrille = window.matchMedia('(min-width: 900px)');
+  const sansMouvement = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let numero = 0;      // la carte affichée (0 = la première)
+  let cible = null;    // la carte vers laquelle une flèche fait défiler
+  let finDefilement;
+
+  const afficherNumero = (nouveau) => {
+    numero = nouveau;
+    compteurVu.textContent = `${numero + 1} / ${cartes.length}`;
+    const phrase = `Avis ${numero + 1} sur ${cartes.length}`;
+    if (compteurLu.textContent !== phrase) compteurLu.textContent = phrase;
+    fleches[0].setAttribute('aria-disabled', String(numero === 0));
+    fleches[1].setAttribute('aria-disabled', String(numero === cartes.length - 1));
+  };
+
+  // Retrouve la carte affichée d'après la position de défilement
+  const lirePosition = () => {
+    const maximum = liste.scrollWidth - liste.clientWidth;
+    // Tout au bout, la dernière carte ne peut pas se caler à gauche : cas à part
+    if (maximum > 0 && liste.scrollLeft >= maximum - 4) return cartes.length - 1;
+    const ecarts = cartes.map((carte) => Math.abs(carte.offsetLeft - cartes[0].offsetLeft - liste.scrollLeft));
+    return ecarts.indexOf(Math.min(...ecarts));
+  };
+
+  const allerA = (demande) => {
+    const suivant = Math.max(0, Math.min(cartes.length - 1, demande));
+    if (suivant === numero) return;
+    cible = suivant;
+    afficherNumero(suivant);
+    const gauche = suivant === cartes.length - 1
+      ? liste.scrollWidth - liste.clientWidth
+      : cartes[suivant].offsetLeft - cartes[0].offsetLeft;
+    liste.scrollTo({ left: gauche, behavior: sansMouvement.matches ? 'auto' : 'smooth' });
+  };
+
+  liste.addEventListener('scroll', () => {
+    // Pendant un défilement lancé par une flèche, le compteur ne repasse pas par les cartes du milieu
+    if (cible === null) afficherNumero(lirePosition());
+    clearTimeout(finDefilement);
+    finDefilement = setTimeout(() => {
+      cible = null;
+      afficherNumero(lirePosition());
+    }, 150);
+  }, { passive: true });
+
+  fleches.forEach((fleche) => {
+    fleche.addEventListener('click', () => allerA(numero + Number(fleche.dataset.sens)));
+  });
+
+  liste.addEventListener('keydown', (evenement) => {
+    if (enGrille.matches || evenement.target !== liste) return;
+    const sens = { ArrowLeft: -1, ArrowRight: 1 }[evenement.key];
+    if (!sens) return;
+    evenement.preventDefault();
+    allerA(numero + sens);
+  });
+
+  // Sur ordinateur c'est une grille : inutile de s'y arrêter avec la touche Tab
+  const adapter = () => {
+    if (enGrille.matches) liste.removeAttribute('tabindex');
+    else liste.tabIndex = 0;
+    cible = null;
+    afficherNumero(lirePosition());
+  };
+  enGrille.addEventListener('change', adapter);
+
+  commandesAvis.hidden = false;
+  adapter();
+}
+
+
+/* 8. BARRE DU BAS ------------------------------------------------------------------- */
+// Accueil seulement (le seul bouton marqué data-appel-principal). Ailleurs, sans JS
+// ou avec "réduire les animations", la barre reste affichée tout le temps.
+const appelPrincipal = document.querySelector('[data-appel-principal]');
+const barreAction = document.querySelector('.barre-action');
+
+if (appelPrincipal && barreAction && 'IntersectionObserver' in window) {
+  const barreFixe = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // Le haut de l'écran est occupé par l'en-tête : le bouton n'y compte pas comme visible
+  const MARGE_HAUT = 64;
+  const position = appelPrincipal.getBoundingClientRect();
+  let boutonVisible = position.bottom > MARGE_HAUT && position.top < window.innerHeight;
+
+  const placerBarre = () => {
+    barreAction.classList.toggle('est-masquee', boutonVisible && !barreFixe.matches);
+  };
+
+  // Premier placement sans glissement, puis on autorise l'animation
+  placerBarre();
+  requestAnimationFrame(() => requestAnimationFrame(() => barreAction.classList.add('est-animee')));
+
+  new IntersectionObserver((entrees) => {
+    boutonVisible = entrees[entrees.length - 1].isIntersecting;
+    placerBarre();
+  }, { rootMargin: `-${MARGE_HAUT}px 0px 0px 0px` }).observe(appelPrincipal);
+
+  barreFixe.addEventListener('change', placerBarre);
 }

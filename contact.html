@@ -16,10 +16,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Accueil d'une maquette : check-list et points à vérifier. Placé après le charset,
+       que le navigateur doit trouver dans les 1024 premiers octets du fichier. -->
+  
 
   <!-- Référencement : un titre et une description propres à chaque page -->
   <title>Contact – AL Chauffage 68, plombier chauffagiste à Colmar</title>
-  <meta name="description" content="Appelez AL Chauffage 68 au 07 67 66 40 92. 5 avenue du Général de Gaulle, 68000 Colmar. Ouvert tous les jours : 7 h – 22 h.">
+  <meta name="description" content="Appelez AL Chauffage 68 au 07 67 66 40 92. 5 avenue du Général de Gaulle, 68000 Colmar. Ouvert tous les jours : 7&nbsp;h – 22&nbsp;h.">
   <!-- "index, follow" pour un vrai site, "noindex, nofollow" pour une maquette -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://sneaqix.github.io/maquette-al-chauffage-68/contact.html">
@@ -29,7 +32,7 @@
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="AL Chauffage 68">
   <meta property="og:title" content="Contact – AL Chauffage 68, plombier chauffagiste à Colmar">
-  <meta property="og:description" content="Appelez AL Chauffage 68 au 07 67 66 40 92. 5 avenue du Général de Gaulle, 68000 Colmar. Ouvert tous les jours : 7 h – 22 h.">
+  <meta property="og:description" content="Appelez AL Chauffage 68 au 07 67 66 40 92. 5 avenue du Général de Gaulle, 68000 Colmar. Ouvert tous les jours : 7&nbsp;h – 22&nbsp;h.">
   <meta property="og:url" content="https://sneaqix.github.io/maquette-al-chauffage-68/contact.html">
   <!-- Image de partage (JPG ou PNG) : absente si le client n'a pas encore de photo -->
   <meta property="og:image" content="https://sneaqix.github.io/maquette-al-chauffage-68/assets/img/partage.png">
@@ -39,15 +42,19 @@
 
   <meta name="theme-color" content="#0b4f8a">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <!-- La graisse des titres et des boutons est chargée en priorité.
+       crossorigin est obligatoire pour une police, même sur le même site. -->
+  <link rel="preload" href="assets/fonts/barlow-700.woff2" as="font" type="font/woff2" crossorigin>
   <!-- ?v=... : empreinte du fichier calculée par generer.py. Elle change dès que
        le fichier change, ce qui oblige le navigateur à recharger la nouvelle
        version au lieu de garder l'ancienne en mémoire (cache). -->
-  <link rel="stylesheet" href="assets/css/style.css?v=8189a736">
+  <link rel="stylesheet" href="assets/css/style.css?v=822691dc">
 
   <!-- Les couleurs du client : elles remplacent celles par défaut de style.css -->
   <style>
     :root {
       --couleur-principale: #0b4f8a;
+      --couleur-action: #c2410c;
       --couleur-accent: #e8a317;
     }
   </style>
@@ -60,7 +67,7 @@
        pour que le menu mobile soit replié dès l'affichage, sans clignotement -->
   <script>document.documentElement.classList.add('js');</script>
   <!-- defer : le script s'exécute une fois la page lue, sans la ralentir -->
-  <script src="assets/js/main.js?v=4a48be93" defer></script>
+  <script src="assets/js/main.js?v=403854ac" defer></script>
 </head>
 <body>
   <!-- Lien d'évitement : permet aux utilisateurs de clavier ou de lecteur
@@ -85,16 +92,16 @@
 
       <nav class="menu" id="menu" aria-label="Menu principal">
         <ul class="menu__liste">
-<li><a class="menu__lien" href="index.html"><svg class="menu__icone" aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Accueil</a></li>
-<li><a class="menu__lien" href="services.html"><svg class="menu__icone" aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-8 8l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 8-8z"/></svg>Services</a></li>
-<li><a class="menu__lien" href="realisations.html"><svg class="menu__icone" aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM4 17l5-5 4 4 3-3 4 4M14 8.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0"/></svg>Réalisations</a></li>
-<li><a class="menu__lien" href="a-propos.html"><svg class="menu__icone" aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8a4 4 0 1 0 8 0a4 4 0 1 0-8 0M4 21a8 7 0 0 1 16 0"/></svg>À propos</a></li>
-<li><a class="menu__lien" href="contact.html" aria-current="page"><svg class="menu__icone" aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v14H3zM3 6l9 7 9-7"/></svg>Contact</a></li>
+<li><a class="menu__lien" href="index.html"><svg class="icone menu__icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Accueil</a></li>
+<li><a class="menu__lien" href="services.html"><svg class="icone menu__icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-8 8l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 8-8z"/></svg>Services</a></li>
+<li><a class="menu__lien" href="realisations.html"><svg class="icone menu__icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM4 17l5-5 4 4 3-3 4 4M14 8.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0"/></svg>Réalisations</a></li>
+<li><a class="menu__lien" href="a-propos.html"><svg class="icone menu__icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8a4 4 0 1 0 8 0a4 4 0 1 0-8 0M4 21a8 7 0 0 1 16 0"/></svg>À propos</a></li>
+<li><a class="menu__lien" href="contact.html" aria-current="page"><svg class="icone menu__icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v14H3zM3 6l9 7 9-7"/></svg>Contact</a></li>
 </ul>
       </nav>
 
       <!-- Téléphone dans l'en-tête : visible sur grand écran -->
-      <a class="entete__tel" href="tel:+33767664092">07 67 66 40 92</a>
+      <a class="entete__tel" href="tel:+33767664092" aria-label="Appeler le 07 67 66 40 92"><svg class="icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3h-3A1.5 1.5 0 0 0 3 4.5 16.5 16.5 0 0 0 19.5 21a1.5 1.5 0 0 0 1.5-1.5v-3l-5-2-2 2.5a14 14 0 0 1-7-7l2.5-2z"/></svg>07 67 66 40 92</a>
     </div>
   </header>
 
@@ -111,42 +118,11 @@
   <div class="conteneur">
     <h1>Contacter AL Chauffage 68 à Colmar</h1>
 
-    <div class="contact__grille">
-      <!-- Coordonnées : même écriture que dans le pied de page et sur Google -->
-      <div class="carte-info">
-        <h2>Coordonnées</h2>
-        <div class="boutons boutons--colonne">
-          <a class="bouton bouton--principal" href="tel:+33767664092">Appeler le 07 67 66 40 92</a>
-          <a class="bouton bouton--secondaire bouton--mobile" href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20">Devis par SMS</a>
-          
-        </div>
-        <address>
-          <strong>AL Chauffage 68</strong><br>
-          5 avenue du Général de Gaulle<br>
-          68000 Colmar
-          <br>E-mail : <span class="a-completer">[à compléter : adresse e-mail]</span>
-        </address>
-        
-        <p class="note-client"><span class="a-completer">[à confirmer avec le client : accord pour recevoir les demandes de devis et les photos par SMS]</span></p>
-        <p class="note-client">Position GPS : <span class="a-completer">[à compléter : géolocalisation, latitude et longitude]</span></p>
-      </div>
-
-      <div class="carte-info">
-        <h2>Horaires</h2>
-        <table class="horaires">
-<caption class="visuellement-cache">Horaires d'ouverture</caption>
-<tbody>
-<tr><th scope="row">Lundi</th><td>7 h – 22 h</td></tr>
-<tr><th scope="row">Mardi</th><td>7 h – 22 h</td></tr>
-<tr><th scope="row">Mercredi</th><td>7 h – 22 h</td></tr>
-<tr><th scope="row">Jeudi</th><td>7 h – 22 h</td></tr>
-<tr><th scope="row">Vendredi</th><td>7 h – 22 h</td></tr>
-<tr><th scope="row">Samedi</th><td>7 h – 22 h</td></tr>
-<tr><th scope="row">Dimanche</th><td>7 h – 22 h</td></tr>
-</tbody>
-</table>
-        <p class="note-client"><span class="a-completer">[à confirmer avec le client : 7 h – 22 h tous les jours, repris de la fiche Google]</span></p>
-      </div>
+    <!-- Ordre : agir (appel, SMS), puis écrire (formulaire), puis les infos pratiques -->
+    <div class="boutons contact__actions">
+      <a class="bouton bouton--action" href="tel:+33767664092"><svg class="icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3h-3A1.5 1.5 0 0 0 3 4.5 16.5 16.5 0 0 0 19.5 21a1.5 1.5 0 0 0 1.5-1.5v-3l-5-2-2 2.5a14 14 0 0 1-7-7l2.5-2z"/></svg><span>Appeler le <span class="numero">07 67 66 40 92</span></span></a>
+      <a class="bouton bouton--secondaire bouton--mobile" href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20"><svg class="icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v13H9l-6 4zM8 10.5h.01M12 10.5h.01M16 10.5h.01"/></svg>Devis par SMS</a>
+      
     </div>
 
     <!--
@@ -157,7 +133,6 @@
 <div class="devis" id="devis">
   <h2>Demander un devis</h2>
   <p>Pour une urgence, <a href="tel:+33767664092">appelez le 07 67 66 40 92</a> : c'est plus rapide.</p>
-  <p class="devis__demo"><strong>Formulaire de démonstration :</strong> rien n'est envoyé. Pour l'activer : <span class="a-completer">[à compléter : clé Web3Forms]</span></p>
 
   <p class="devis__retour" id="demande-envoyee">Merci, votre demande est bien envoyée.</p>
 
@@ -229,11 +204,12 @@
     <p class="formulaire__photo">Une photo du problème nous aide beaucoup : <a href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20">envoyez-la par SMS au 07 67 66 40 92</a>.</p>
 
     <p class="formulaire__sans-js">Formulaire indisponible pour le moment : appelez-nous ou écrivez-nous par SMS au 07 67 66 40 92.</p>
-    <button class="bouton bouton--principal formulaire__envoi" type="submit" disabled>Envoyer ma demande</button>
+    <button class="bouton bouton--action formulaire__envoi" type="submit" disabled>Envoyer ma demande</button>
 
     <!-- role="status" : le message est lu par les lecteurs d'écran dès qu'il s'affiche -->
     <p class="formulaire__etat" role="status" tabindex="-1" data-telephone="07 67 66 40 92"></p>
   </form>
+  <p class="devis__demo"><strong>Formulaire de démonstration :</strong> rien n'est envoyé. Pour l'activer : <span class="a-completer">[à compléter : clé Web3Forms]</span></p>
 
   <p class="devis__rgpd">
     Vos données sont utilisées par AL Chauffage 68 uniquement pour répondre à votre demande,
@@ -244,6 +220,37 @@
   </p>
 </div>
 
+
+    <div class="contact__grille">
+      <!-- Coordonnées : même écriture que dans le pied de page et sur Google -->
+      <div class="carte-info">
+        <h2 class="titre-icone"><svg class="icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12zM9.5 10a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"/></svg>Coordonnées</h2>
+        <address>
+          <strong>AL Chauffage 68</strong><br>
+          5 avenue du Général de Gaulle<br>
+          68000 Colmar<br>
+          Téléphone : <a class="lien-tactile" href="tel:+33767664092">07 67 66 40 92</a>
+          <br>E-mail : <span class="a-completer">[à compléter : adresse e-mail]</span>
+        </address>
+        
+      </div>
+
+      <div class="carte-info">
+        <h2 class="titre-icone"><svg class="icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v16H3zM3 10h18M8 2v5M16 2v5M8 15.5l3 2.5 5-5"/></svg>Horaires</h2>
+        <table class="horaires">
+<caption class="visuellement-cache">Horaires d'ouverture</caption>
+<tbody>
+<tr><th scope="row">Lundi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Mardi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Mercredi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Jeudi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Vendredi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Samedi</th><td>7 h – 22 h</td></tr>
+<tr><th scope="row">Dimanche</th><td>7 h – 22 h</td></tr>
+</tbody>
+</table>
+      </div>
+    </div>
 
     <!-- Carte chargée au clic -->
     <div class="carte" data-carte-src="https://www.google.com/maps?q=AL+Chauffage+68%2C+5+avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle%2C+68000+Colmar&amp;output=embed">
@@ -291,10 +298,10 @@
   <!-- Barre d'action fixe en bas de l'écran, sur téléphone uniquement -->
   <div class="barre-action">
     <a class="barre-action__bouton barre-action__bouton--appel" href="tel:+33767664092">
-      <svg class="icone-appel" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+      <svg class="icone icone-appel" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3h-3A1.5 1.5 0 0 0 3 4.5 16.5 16.5 0 0 0 19.5 21a1.5 1.5 0 0 0 1.5-1.5v-3l-5-2-2 2.5a14 14 0 0 1-7-7l2.5-2z"/></svg>
       Appeler
     </a>
-    <a class="barre-action__bouton" href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-6 4V5a2 2 0 0 1 2-2z"/></svg>Devis SMS</a>
+    <a class="barre-action__bouton" href="sms:+33767664092?&amp;body=Bonjour%2C%20je%20vous%20contacte%20depuis%20votre%20site.%20Je%20souhaite%20un%20devis%20pour%20%3A%20"><svg class="icone" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v13H9l-6 4zM8 10.5h.01M12 10.5h.01M16 10.5h.01"/></svg>Devis SMS</a>
   </div>
 </body>
 </html>

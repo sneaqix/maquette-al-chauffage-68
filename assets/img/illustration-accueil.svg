@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" width="480" height="300">
+  <!-- Illustration originale du haut de l'accueil : clé à molette, radiateur, goutte.
+       Une image SVG ne lit pas les variables du CSS : couleurs à changer ici. -->
+  <!-- Fond gris clair et sol -->
+  <path fill="#dde3ea" d="M62 264C8 214 18 108 88 58 160 6 240 46 310 34c84-14 160 48 156 126-2 46-22 82-48 104z"/>
+  <rect x="20" y="262" width="440" height="8" rx="4" fill="#b9c4d1"/>
+
+  <!-- Chaleur -->
+  <g fill="none" stroke="#c2410c" stroke-width="9" stroke-linecap="round">
+    <path d="M290 112c-14-16 14-26 0-44"/>
+    <path d="M336 112c-14-16 14-26 0-44"/>
+    <path d="M382 112c-14-16 14-26 0-44"/>
+  </g>
+
+  <!-- Radiateur -->
+  <g fill="#c2410c">
+    <rect x="266" y="130" width="28" height="120" rx="14"/>
+    <rect x="300" y="130" width="28" height="120" rx="14"/>
+    <rect x="334" y="130" width="28" height="120" rx="14"/>
+    <rect x="368" y="130" width="28" height="120" rx="14"/>
+    <rect x="254" y="154" width="164" height="14" rx="7"/>
+    <rect x="254" y="212" width="164" height="14" rx="7"/>
+    <rect x="274" y="244" width="12" height="20" rx="3"/>
+    <rect x="376" y="244" width="12" height="20" rx="3"/>
+  </g>
+  <circle cx="420" cy="161" r="12" fill="#0b4f8a"/>
+
+  <!-- Clé à molette -->
+  <g transform="translate(142 88) rotate(-24)">
+    <path fill="#0b4f8a" d="M-20-42A47 47 0 0 0-18 43V172A18 18 0 0 0 18 172V43A47 47 0 0 0 20-42V-5L0 8-20-5Z"/>
+    <rect x="-7" y="64" width="14" height="78" rx="7" fill="#dde3ea"/>
+    <circle cx="0" cy="22" r="8" fill="#c2410c"/>
+    <circle cx="0" cy="170" r="7" fill="#dde3ea"/>
+  </g>
+
+  <!-- Goutte d'eau -->
+  <path fill="#0b4f8a" d="M76 150c0 0-34 40-34 64a34 34 0 0 0 68 0c0-24-34-64-34-64z"/>
+  <path fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" d="M59 215a18 18 0 0 0 12 17"/>
+</svg>
